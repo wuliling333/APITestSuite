@@ -1,0 +1,9 @@
+test_cases:
+  FetchSelfFullUserInfo:
+    description: "获取自己的完整用户信息"
+    request: {}
+  UpdateNickname:
+    description: "更新昵称"
+    request:
+      nickname: "TestNickname_123"
+

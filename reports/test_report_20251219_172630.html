@@ -1,0 +1,2560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API测试报告</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .summary {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+        }
+        .stat-card.total { background: #2196F3; }
+        .stat-card.passed { background: #4CAF50; }
+        .stat-card.failed { background: #f44336; }
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .service-section {
+            margin: 40px 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .service-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+            cursor: pointer;
+        }
+        .service-header:hover {
+            background: #e9ecef;
+        }
+        .service-content {
+            padding: 20px;
+            display: none;
+        }
+        .service-content.expanded {
+            display: block;
+        }
+        .test-case {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #4CAF50;
+        }
+        .test-case.failed {
+            border-left-color: #f44336;
+        }
+        .test-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .test-detail {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #666;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .problem-analysis {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .problem-analysis .detail-label {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>API测试报告</h1>
+        <p>生成时间: 2025-12-19 17:26:30</p>
+        
+        <div class="summary">
+            <div class="stat-card total">
+                <div class="stat-label">总接口数</div>
+                <div class="stat-number">34</div>
+            </div>
+            <div class="stat-card passed">
+                <div class="stat-label">通过</div>
+                <div class="stat-number">30</div>
+            </div>
+            <div class="stat-card failed">
+                <div class="stat-label">失败</div>
+                <div class="stat-number">4</div>
+            </div>
+        </div>
+        
+        
+        <div class="service-section">
+            <div class="service-header" onclick="toggleService('room')">
+                ROOM 服务
+            </div>
+            <div class="service-content" id="service-room">
+                
+                <div class="test-case failed">
+                    <div class="test-name">StartGameFromTeam</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "team_id (int64)": "[未提供]",
+  "map_id (int32)": "[未提供]",
+  "difficulty (int32)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": false,
+  "response": {},
+  "error_code": 501,
+  "error_message": "team not exist"
+}</pre>
+                    </div>
+                    
+                    <div class="test-detail">
+                        <span class="detail-label">错误:</span>
+                        <pre>Traceback (most recent call last):
+  File "/Users/rourou/Desktop/APITestSuite/generated_tests/test_room.py", line 398, in test_startgamefromteam
+    self.assertTrue(False, f"API调用失败: {error_msg}")
+AssertionError: False is not true : API调用失败: team not exist
+</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>
+服务器报错:
+  team not exist
+
+可能存在的问题:
+• 问题说明：队伍不存在或用户不在队伍中
+• 可能原因：team_id 无效、队伍已解散、用户未加入队伍</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">CancelMatch</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "team_id (int64)": 1005071
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "cancelmatch": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">ChangeReadyState</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "team_id (int64)": 1009978,
+  "ready (bool)": true
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "changereadystate": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">CreateTeam</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "game_mode (int32)": 1
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "createteam": {
+      "team_info": {
+        "team_id": 1005068,
+        "game_mode": 1,
+        "seats": [
+          {
+            "seat_id": 1,
+            "uid": 10000263
+          },
+          {
+            "seat_id": 2,
+            "uid": 0
+          },
+          {
+            "seat_id": 3,
+            "uid": 0
+          },
+          {
+            "seat_id": 4,
+            "uid": 0
+          }
+        ],
+        "players": [
+          {
+            "uid": 10000263,
+            "nickname": "",
+            "game_id": 0,
+            "status": 0
+          }
+        ],
+        "create_timestamp_ms": 1766136388282,
+        "owner_uid": 10000263,
+        "status": 0,
+        "prepare_for_game_info": {
+          "map_id": 0,
+          "difficulty": 0
+        }
+      }
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">Getgameinfo</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">GetTeamInfo</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "team_id (int64)": 1002203
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "getteaminfo": {
+      "team_info": {
+        "team_id": 1002203,
+        "game_mode": 1,
+        "seats": [
+          {
+            "seat_id": 1,
+            "uid": 10000263
+          },
+          {
+            "seat_id": 2,
+            "uid": 0
+          },
+          {
+            "seat_id": 3,
+            "uid": 0
+          },
+          {
+            "seat_id": 4,
+            "uid": 0
+          }
+        ],
+        "players": [
+          {
+            "uid": 10000263,
+            "nickname": "",
+            "game_id": 0,
+            "status": 0
+          }
+        ],
+        "create_timestamp_ms": 1766136388482,
+        "owner_uid": 10000263,
+        "status": 0,
+        "prepare_for_game_info": {
+          "map_id": 0,
+          "difficulty": 0
+        }
+      }
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">GetUserState</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "getuserstate": {
+      "team_id": 1002203,
+      "game_id": 2008613
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">JoinTeam</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "team_id (int64)": 1006772
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "jointeam": {
+      "team_info": {
+        "team_id": 1006772,
+        "game_mode": 1,
+        "seats": [
+          {
+            "seat_id": 1,
+            "uid": 10000263
+          },
+          {
+            "seat_id": 2,
+            "uid": 0
+          },
+          {
+            "seat_id": 3,
+            "uid": 0
+          },
+          {
+            "seat_id": 4,
+            "uid": 0
+          }
+        ],
+        "players": [
+          {
+            "uid": 10000263,
+            "nickname": "",
+            "game_id": 0,
+            "status": 0
+          }
+        ],
+        "create_timestamp_ms": 1766136388677,
+        "owner_uid": 10000263,
+        "status": 0,
+        "prepare_for_game_info": {
+          "map_id": 0,
+          "difficulty": 0
+        }
+      }
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>前置条件:
+  ✓ 创建队伍 (CreateTeam)
+  ✓ 获取 team_id</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">LeaveTeam</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "team_id (int64)": 1000553
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "leaveteam": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">Match</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "team_id (int64)": 1004199,
+  "map_id (int32)": 1,
+  "difficulty (int32)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "match": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="service-section">
+            <div class="service-header" onclick="toggleService('social')">
+                SOCIAL 服务
+            </div>
+            <div class="service-content" id="service-social">
+                
+                <div class="test-case failed">
+                    <div class="test-name">GetReactions</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "conv_id (string)": "w_default",
+  "seq (int64)": 497
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": false,
+  "response": {},
+  "error_code": 500,
+  "error_message": "get reactions failed"
+}</pre>
+                    </div>
+                    
+                    <div class="test-detail">
+                        <span class="detail-label">错误:</span>
+                        <pre>Traceback (most recent call last):
+  File "/Users/rourou/Desktop/APITestSuite/generated_tests/test_social.py", line 530, in test_getreactions
+    self.assertTrue(False, f"API调用失败: {error_msg}")
+AssertionError: False is not true : API调用失败: get reactions failed
+</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>前置条件:
+  ✓ 发送消息 (SendMessage)
+  ✓ 获取 conv_id
+
+服务器报错:
+  get reactions failed
+
+可能存在的问题:
+• 问题说明：世界聊天消息不支持获取反应
+• 可能原因：世界聊天消息存储在 Redis Stream，未持久化到 MongoDB，无法查询反应信息</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case failed">
+                    <div class="test-name">GetSingleChatConvList</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "update_time_after (int64)": "[未提供]",
+  "limit (int32)": "[未提供]",
+  "offset (int32)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": false,
+  "response": {},
+  "error_code": 501,
+  "error_message": "not implemented"
+}</pre>
+                    </div>
+                    
+                    <div class="test-detail">
+                        <span class="detail-label">错误:</span>
+                        <pre>Traceback (most recent call last):
+  File "/Users/rourou/Desktop/APITestSuite/generated_tests/test_social.py", line 570, in test_getsinglechatconvlist
+    self.assertTrue(False, f"API调用失败: {error_msg}")
+AssertionError: False is not true : API调用失败: not implemented
+</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>
+服务器报错:
+  not implemented
+
+可能存在的问题:
+• 问题说明：该接口在服务器端尚未实现
+• 可能原因：功能开发中或已废弃</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case failed">
+                    <div class="test-name">RevokeMsg</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "conv_id (string)": "w_default",
+  "seq (int64)": 500
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": false,
+  "response": {},
+  "error_code": 501,
+  "error_message": "message not found"
+}</pre>
+                    </div>
+                    
+                    <div class="test-detail">
+                        <span class="detail-label">错误:</span>
+                        <pre>Traceback (most recent call last):
+  File "/Users/rourou/Desktop/APITestSuite/generated_tests/test_social.py", line 266, in test_revokemsg
+    self.assertTrue(False, f"API调用失败: {error_msg}")
+AssertionError: False is not true : API调用失败: message not found
+</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>前置条件:
+  ✓ 发送消息 (SendMessage)
+  ✓ 获取 conv_id
+
+服务器报错:
+  message not found
+
+可能存在的问题:
+• 问题说明：世界聊天消息不支持此操作
+• 可能原因：世界聊天消息存储在 Redis Stream，未持久化到 MongoDB，无法进行消息查询操作</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">AddReaction</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "conv_id (string)": "w_default",
+  "seq (int64)": 495,
+  "reaction_id (int32)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "addreaction": {
+      "success": true,
+      "total_count": 0
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>前置条件:
+  ✓ 发送消息 (SendMessage)
+  ✓ 获取 conv_id</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">DeleteMsg</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "conv_id (string)": "w_default",
+  "seqs (repeated int64)": [
+    496
+  ]
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "deletemsg": {
+      "deleted_count": 0
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>前置条件:
+  ✓ 发送消息 (SendMessage)
+  ✓ 获取 conv_id</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">Follow</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "target_uid (int64)": 10000264
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "follow": {
+      "friend_info": {
+        "user_info": {
+          "uid": 10000264,
+          "nickname": "User_10000264"
+        },
+        "online_info": {
+          "online_status": 0,
+          "online_since_time_ms": 0
+        },
+        "relation_type": 1,
+        "create_time_ms": 1766136389724
+      }
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>前置条件:
+  ✓ 先关注 (Follow)
+  ✓ 使用有效的 target_uid</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">GetFansList</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "last_uid (int64)": "[未提供]",
+  "last_create_time_ms (int64)": "[未提供]",
+  "limit (int32)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "getfanslist": {
+      "fans_list": []
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">GetFollowList</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "getfollowlist": {
+      "follow_list": [
+        {
+          "user_info": {
+            "uid": 10000264,
+            "nickname": "User_10000264"
+          },
+          "online_info": {
+            "online_status": 0,
+            "online_since_time_ms": 0
+          },
+          "relation_type": 1,
+          "create_time_ms": 0
+        }
+      ]
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">GetFriendList</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "getfriendlist": {
+      "friend_list": []
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">Markread</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">PullMsgs</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "conv_id (string)": "w_default",
+  "scene (int32)": 4,
+  "scene_id (int64)": 0,
+  "start_seq (int64)": 0,
+  "count (int32)": 20,
+  "reverse (bool)": false
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "pullmsgs": {
+      "msgs": [
+        {
+          "msg_id": "w_default_479_396618",
+          "conv_id": "w_default",
+          "seq": 479,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766135236458,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_480_748612",
+          "conv_id": "w_default",
+          "seq": 480,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766135236608,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_481_82333",
+          "conv_id": "w_default",
+          "seq": 481,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136193547,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_482_550483",
+          "conv_id": "w_default",
+          "seq": 482,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136193673,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_483_27172",
+          "conv_id": "w_default",
+          "seq": 483,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136194071,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_484_513003",
+          "conv_id": "w_default",
+          "seq": 484,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136194349,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_485_610800",
+          "conv_id": "w_default",
+          "seq": 485,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136194485,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_486_821846",
+          "conv_id": "w_default",
+          "seq": 486,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136194614,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_487_78154",
+          "conv_id": "w_default",
+          "seq": 487,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136194737,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_488_62853",
+          "conv_id": "w_default",
+          "seq": 488,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136294921,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_489_727984",
+          "conv_id": "w_default",
+          "seq": 489,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136295047,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_490_699247",
+          "conv_id": "w_default",
+          "seq": 490,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136295440,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_491_349300",
+          "conv_id": "w_default",
+          "seq": 491,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136295620,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_492_849231",
+          "conv_id": "w_default",
+          "seq": 492,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136295746,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_493_85046",
+          "conv_id": "w_default",
+          "seq": 493,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136295871,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_494_33678",
+          "conv_id": "w_default",
+          "seq": 494,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136295994,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_495_680101",
+          "conv_id": "w_default",
+          "seq": 495,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136389461,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_496_635826",
+          "conv_id": "w_default",
+          "seq": 496,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136389587,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_497_476800",
+          "conv_id": "w_default",
+          "seq": 497,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136389982,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        },
+        {
+          "msg_id": "w_default_498_900956",
+          "conv_id": "w_default",
+          "seq": 498,
+          "sender_uid": 10000263,
+          "sender_name": "",
+          "sender_avatar": "",
+          "msg_type": 1,
+          "content": {
+            "msg_type": 1,
+            "text": {
+              "text": "test message",
+              "mentions": []
+            },
+            "enlist": {
+              "rid": 0,
+              "game_mode": 0,
+              "expire_time_ms": 0
+            },
+            "short_phrase": {
+              "phrase_id": 0
+            },
+            "custom_broadcast": {
+              "broadcast_id": 0,
+              "param": ""
+            },
+            "notification": {
+              "notification_type": 0,
+              "content": "",
+              "related_uids": []
+            }
+          },
+          "send_time_ms": 1766136390172,
+          "is_revoked": false,
+          "client_msg_id": "",
+          "reactions": []
+        }
+      ],
+      "has_more": true,
+      "min_seq": 0,
+      "max_seq": 498
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">RemoveReaction</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "conv_id (string)": "w_default",
+  "seq (int64)": 499,
+  "reaction_id (int32)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "removereaction": {
+      "success": true,
+      "total_count": 0
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                    <div class="test-detail problem-analysis">
+                        <span class="detail-label">问题分析:</span>
+                        <pre>前置条件:
+  ✓ 发送消息 (SendMessage)
+  ✓ 获取 conv_id</pre>
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">SendMessage</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "conv_id (string)": "",
+  "scene (int32)": 4,
+  "scene_id (int64)": 0,
+  "to_uid (int64)": 0,
+  "content (ChatMsgContent)": {
+    "msg_type": 1,
+    "text": {
+      "text": "test message"
+    }
+  },
+  "client_msg_id (string)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "sendmessage": {
+      "msg_id": "w_default_501_208654",
+      "conv_id": "w_default",
+      "seq": 501,
+      "send_time_ms": 1766136390590
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">Unfollow</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "target_uid (int64)": 10000264
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "unfollow": {}
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="service-section">
+            <div class="service-header" onclick="toggleService('hall')">
+                HALL 服务
+            </div>
+            <div class="service-content" id="service-hall">
+                
+                <div class="test-case ">
+                    <div class="test-name">Backpacktostash</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">BuyItem</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "item_id_list (repeated int64)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "buyitem": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">DebugAddCash</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "amount (int64)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "debugaddcash": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">DebugAddItem</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "item_id (int64)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "debugadditem": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">Exchangebackpackitem</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">FetchSelfFullUserInfo</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "fetchselffulluserinfo": {
+      "full_user_info": {
+        "uid": 10000263,
+        "nickname": "TestNickname_123",
+        "stash": {
+          "items": [
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 1,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 2,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 3,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 4,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 5,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 6,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 7,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 8,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 9,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 10,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 11,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 12,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 13,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 14,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 15,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 16,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 17,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 18,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 19,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 20,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 21,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 22,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 23,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 24,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 25,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 26,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 27,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 28,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 29,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 30,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 31,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 32,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 33,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 34,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 35,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 36,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 37,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 38,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 39,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 40,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 41,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 42,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 43,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 44,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 45,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 46,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 47,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 48,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 49,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 50,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 51,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 52,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 53,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 54,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 55,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 56,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 57,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 58,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 59,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 60,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 61,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 62,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 63,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 64,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 65,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 66,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 67,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 68,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 69,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 70,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 71,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 72,
+              "durability": 0.0,
+              "max_durability": 0.0
+            },
+            {
+              "item_id": 0,
+              "count": 1,
+              "unique_id": 73,
+              "durability": 0.0,
+              "max_durability": 0.0
+            }
+          ]
+        },
+        "cash": 0,
+        "backpack": {
+          "cells": [
+            {
+              "cell_id": 0,
+              "cell_type": 1,
+              "carried_item": {
+                "item_id": 0,
+                "durability": 0.0,
+                "max_durability": 0.0,
+                "unique_id": 0
+              }
+            },
+            {
+              "cell_id": 1,
+              "cell_type": 1,
+              "carried_item": {
+                "item_id": 0,
+                "durability": 0.0,
+                "max_durability": 0.0,
+                "unique_id": 0
+              }
+            },
+            {
+              "cell_id": 0,
+              "cell_type": 2,
+              "carried_item": {
+                "item_id": 0,
+                "durability": 0.0,
+                "max_durability": 0.0,
+                "unique_id": 0
+              }
+            },
+            {
+              "cell_id": 1,
+              "cell_type": 2,
+              "carried_item": {
+                "item_id": 0,
+                "durability": 0.0,
+                "max_durability": 0.0,
+                "unique_id": 0
+              }
+            },
+            {
+              "cell_id": 2,
+              "cell_type": 2,
+              "carried_item": {
+                "item_id": 0,
+                "durability": 0.0,
+                "max_durability": 0.0,
+                "unique_id": 0
+              }
+            },
+            {
+              "cell_id": 3,
+              "cell_type": 2,
+              "carried_item": {
+                "item_id": 0,
+                "durability": 0.0,
+                "max_durability": 0.0,
+                "unique_id": 0
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">FetchSimpleUserInfo</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "target_uid (int64)": 10000263
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "fetchsimpleuserinfo": {
+      "simple_user_info": {
+        "uid": 10000263,
+        "nickname": "TestNickname_123"
+      }
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">SellItem</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "unique_id_list (repeated int32)": "[未提供]"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "sellitem": {
+      "success": true
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">Stashtobackpack</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="test-case ">
+                    <div class="test-name">UpdateNickname</div>
+                    <div class="test-detail">
+                        <span class="detail-label">请求:</span>
+                        <pre>{
+  "nickname (string)": "TestNickname_123"
+}</pre>
+                    </div>
+                    <div class="test-detail">
+                        <span class="detail-label">响应:</span>
+                        <pre>{
+  "success": true,
+  "response": {
+    "updatenickname": {
+      "nickname": "TestNickname_123"
+    }
+  },
+  "error_code": 200,
+  "error_message": ""
+}</pre>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        function toggleService(serviceName) {
+            const content = document.getElementById('service-' + serviceName);
+            content.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>

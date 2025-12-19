@@ -1,0 +1,14 @@
+test_cases:
+  CreateTeam:
+    description: "创建队伍"
+    request:
+      game_mode: 1
+  JoinTeam:
+    description: "加入队伍"
+    request:
+      team_id: 0
+  GetTeamInfo:
+    description: "获取队伍信息"
+    request:
+      team_id: 0
+

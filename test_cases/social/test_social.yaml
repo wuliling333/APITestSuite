@@ -1,0 +1,17 @@
+test_cases:
+  SendMessage:
+    description: "发送消息"
+    request:
+      to_uid: 0
+      conv_id: ""
+      scene: 1
+      scene_id: 0
+  Follow:
+    description: "关注用户"
+    request:
+      target_uid: 0
+  Unfollow:
+    description: "取消关注"
+    request:
+      target_uid: 0
+

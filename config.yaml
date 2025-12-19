@@ -1,0 +1,25 @@
+servers:
+  gate:
+    address: "47.84.190.150:29205"
+  login:
+    url: "http://47.84.190.150:29002"
+
+jinn_server:
+  repo_url: "https://git.17zjh.com/wegame/jinn_server.git"
+  branch: "v0.1.0"
+  local_path: "jinn_server"
+  read_only: true
+
+services:
+  hall:
+    proto_path: "jinn_server/config/proto_jinn/client"
+  room:
+    proto_path: "jinn_server/config/proto_jinn/client"
+  social:
+    proto_path: "jinn_server/config/proto_jinn/client"
+
+test:
+  output_dir: "generated_tests"
+  report_dir: "reports"
+  timeout: 30
+
