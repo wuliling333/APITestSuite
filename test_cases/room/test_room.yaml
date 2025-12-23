@@ -1,14 +1,1691 @@
 test_cases:
-  CreateTeam:
-    description: "创建队伍"
+  GetUserState_正常:
+    description: GetUserState_正常调用
+    priority: P0
+    preconditions: 已登录
+    dimension: 正常
+    request: {}
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        getuserstate:
+          in_team: true
+          team_id: 1006329
+          in_game: false
+          game_id: 0
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  GetUserState_参数异常_必填参数缺失:
+    description: GetUserState_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  GetUserState_参数异常_参数类型错误:
+    description: GetUserState_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  GetUserState_参数异常_参数值为空:
+    description: GetUserState_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  GetUserState_参数异常_参数值超出范围:
+    description: GetUserState_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  GetUserState_参数异常_参数格式错误:
+    description: GetUserState_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  GetUserState_权限安全:
+    description: GetUserState_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录
+    dimension: 权限安全
+    request: {}
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  GetUserState_性能边界:
+    description: GetUserState_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录
+    dimension: 性能边界
+    request: {}
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        getuserstate:
+          in_team: true
+          team_id: 1006329
+          in_game: false
+          game_id: 0
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  CreateTeam_正常:
+    description: CreateTeam_正常调用
+    priority: P0
+    preconditions: 已登录
+    dimension: 正常
     request:
-      game_mode: 1
-  JoinTeam:
-    description: "加入队伍"
+      game_mode:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        createteam:
+          team_info:
+            team_id: 1006329
+            game_mode: 1
+            members: []
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库中存在新记录
+    remark: 正常业务流程验证
+  CreateTeam_参数异常_必填参数缺失:
+    description: CreateTeam_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
     request:
-      team_id: 0
-  GetTeamInfo:
-    description: "获取队伍信息"
+      game_mode:
+        value: null
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  CreateTeam_参数异常_参数类型错误:
+    description: CreateTeam_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
     request:
-      team_id: 0
-
+      game_mode:
+        value: wrong_type
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  CreateTeam_参数异常_参数值为空:
+    description: CreateTeam_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      game_mode:
+        value: 0
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  CreateTeam_参数异常_参数值超出范围:
+    description: CreateTeam_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      game_mode:
+        value: 999999999
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  CreateTeam_参数异常_参数格式错误:
+    description: CreateTeam_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      game_mode:
+        value: invalid_format_@#$%
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  CreateTeam_业务异常:
+    description: CreateTeam_业务异常_队伍不存在
+    priority: P1
+    preconditions: 已登录
+    dimension: 业务异常
+    request:
+      game_mode:
+        value: 1
+        type: int32
+    expected_status: '400'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_message contains "team not exist"
+    db_check: 数据未变更
+    remark: 操作不存在的队伍
+  CreateTeam_权限安全:
+    description: CreateTeam_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录
+    dimension: 权限安全
+    request:
+      game_mode:
+        value: 1
+        type: int32
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  CreateTeam_性能边界:
+    description: CreateTeam_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录
+    dimension: 性能边界
+    request:
+      game_mode:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        createteam:
+          team_info:
+            team_id: 1006329
+            game_mode: 1
+            members: []
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  JoinTeam_正常:
+    description: JoinTeam_正常调用
+    priority: P0
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 正常
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        jointeam:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  JoinTeam_参数异常_必填参数缺失:
+    description: JoinTeam_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  JoinTeam_参数异常_参数类型错误:
+    description: JoinTeam_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  JoinTeam_参数异常_参数值为空:
+    description: JoinTeam_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  JoinTeam_参数异常_参数值超出范围:
+    description: JoinTeam_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  JoinTeam_参数异常_参数格式错误:
+    description: JoinTeam_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid team_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  JoinTeam_业务异常:
+    description: JoinTeam_业务异常_队伍不存在
+    priority: P1
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 业务异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+    expected_status: '400'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_message contains "team not exist"
+    db_check: 数据未变更
+    remark: 操作不存在的队伍
+  JoinTeam_权限安全:
+    description: JoinTeam_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 权限安全
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  JoinTeam_性能边界:
+    description: JoinTeam_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，存在可加入的队伍
+    dimension: 性能边界
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        jointeam:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  LeaveTeam_正常:
+    description: LeaveTeam_正常调用
+    priority: P0
+    preconditions: 已登录，已加入队伍
+    dimension: 正常
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        leaveteam:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  LeaveTeam_参数异常_必填参数缺失:
+    description: LeaveTeam_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，已加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  LeaveTeam_参数异常_参数类型错误:
+    description: LeaveTeam_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，已加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  LeaveTeam_参数异常_参数值为空:
+    description: LeaveTeam_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，已加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  LeaveTeam_参数异常_参数值超出范围:
+    description: LeaveTeam_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，已加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  LeaveTeam_参数异常_参数格式错误:
+    description: LeaveTeam_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，已加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid team_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  LeaveTeam_业务异常:
+    description: LeaveTeam_业务异常_队伍不存在
+    priority: P1
+    preconditions: 已登录，已加入队伍
+    dimension: 业务异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+    expected_status: '400'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_message contains "team not exist"
+    db_check: 数据未变更
+    remark: 操作不存在的队伍
+  LeaveTeam_权限安全:
+    description: LeaveTeam_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，已加入队伍
+    dimension: 权限安全
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  LeaveTeam_性能边界:
+    description: LeaveTeam_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，已加入队伍
+    dimension: 性能边界
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        leaveteam:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  GetTeamInfo_正常:
+    description: GetTeamInfo_正常调用
+    priority: P0
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 正常
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        getteaminfo:
+          team_info:
+            team_id: 1006329
+            game_mode: 1
+            members: []
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  GetTeamInfo_参数异常_必填参数缺失:
+    description: GetTeamInfo_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  GetTeamInfo_参数异常_参数类型错误:
+    description: GetTeamInfo_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  GetTeamInfo_参数异常_参数值为空:
+    description: GetTeamInfo_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  GetTeamInfo_参数异常_参数值超出范围:
+    description: GetTeamInfo_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  GetTeamInfo_参数异常_参数格式错误:
+    description: GetTeamInfo_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid team_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  GetTeamInfo_业务异常:
+    description: GetTeamInfo_业务异常_队伍不存在
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 业务异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+    expected_status: '400'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_message contains "team not exist"
+    db_check: 数据未变更
+    remark: 操作不存在的队伍
+  GetTeamInfo_权限安全:
+    description: GetTeamInfo_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 权限安全
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  GetTeamInfo_性能边界:
+    description: GetTeamInfo_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 性能边界
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        getteaminfo:
+          team_info:
+            team_id: 1006329
+            game_mode: 1
+            members: []
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  ChangeReadyState_正常:
+    description: ChangeReadyState_正常调用
+    priority: P0
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 正常
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        changereadystate:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  ChangeReadyState_参数异常_必填参数缺失:
+    description: ChangeReadyState_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: null
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  ChangeReadyState_参数异常_参数类型错误:
+    description: ChangeReadyState_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: wrong_type
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  ChangeReadyState_参数异常_参数值为空:
+    description: ChangeReadyState_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 0
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  ChangeReadyState_参数异常_参数值超出范围:
+    description: ChangeReadyState_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  ChangeReadyState_参数异常_参数格式错误:
+    description: ChangeReadyState_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: -1
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid team_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  ChangeReadyState_权限安全:
+    description: ChangeReadyState_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 权限安全
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  ChangeReadyState_性能边界:
+    description: ChangeReadyState_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，已创建或加入队伍
+    dimension: 性能边界
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      ready:
+        value: true
+        type: bool
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        changereadystate:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  StartGameFromTeam_正常:
+    description: StartGameFromTeam_正常调用
+    priority: P0
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 正常
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        startgamefromteam:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  StartGameFromTeam_参数异常_必填参数缺失:
+    description: StartGameFromTeam_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 参数异常
+    request:
+      team_id:
+        value: null
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  StartGameFromTeam_参数异常_参数类型错误:
+    description: StartGameFromTeam_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 参数异常
+    request:
+      team_id:
+        value: wrong_type
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  StartGameFromTeam_参数异常_参数值为空:
+    description: StartGameFromTeam_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 0
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  StartGameFromTeam_参数异常_参数值超出范围:
+    description: StartGameFromTeam_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  StartGameFromTeam_参数异常_参数格式错误:
+    description: StartGameFromTeam_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 参数异常
+    request:
+      team_id:
+        value: -1
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid team_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  StartGameFromTeam_业务异常:
+    description: StartGameFromTeam_业务异常_队伍不存在
+    priority: P1
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 业务异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: '400'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_message contains "team not exist"
+    db_check: 数据未变更
+    remark: 操作不存在的队伍
+  StartGameFromTeam_权限安全:
+    description: StartGameFromTeam_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 权限安全
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  StartGameFromTeam_性能边界:
+    description: StartGameFromTeam_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，已创建队伍，所有成员已准备
+    dimension: 性能边界
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        startgamefromteam:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  Match_正常:
+    description: Match_正常调用
+    priority: P0
+    preconditions: 已登录，已创建队伍
+    dimension: 正常
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        match:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  Match_参数异常_必填参数缺失:
+    description: Match_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，已创建队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: null
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  Match_参数异常_参数类型错误:
+    description: Match_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，已创建队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: wrong_type
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  Match_参数异常_参数值为空:
+    description: Match_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，已创建队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 0
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  Match_参数异常_参数值超出范围:
+    description: Match_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，已创建队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  Match_参数异常_参数格式错误:
+    description: Match_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，已创建队伍
+    dimension: 参数异常
+    request:
+      team_id:
+        value: -1
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid team_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  Match_权限安全:
+    description: Match_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，已创建队伍
+    dimension: 权限安全
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  Match_性能边界:
+    description: Match_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，已创建队伍
+    dimension: 性能边界
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+      map_id:
+        value: 10000263
+        type: int32
+      difficulty:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        match:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  CancelMatch_正常:
+    description: CancelMatch_正常调用
+    priority: P0
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 正常
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        cancelmatch:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  CancelMatch_参数异常_必填参数缺失:
+    description: CancelMatch_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 参数异常
+    request:
+      team_id:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  CancelMatch_参数异常_参数类型错误:
+    description: CancelMatch_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 参数异常
+    request:
+      team_id:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  CancelMatch_参数异常_参数值为空:
+    description: CancelMatch_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  CancelMatch_参数异常_参数值超出范围:
+    description: CancelMatch_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 参数异常
+    request:
+      team_id:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  CancelMatch_参数异常_参数格式错误:
+    description: CancelMatch_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 参数异常
+    request:
+      team_id:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid team_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  CancelMatch_权限安全:
+    description: CancelMatch_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 权限安全
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: team not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  CancelMatch_性能边界:
+    description: CancelMatch_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，队伍正在匹配中
+    dimension: 性能边界
+    request:
+      team_id:
+        value: 1006329
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        cancelmatch:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  GetGameInfo_正常:
+    description: GetGameInfo_正常调用
+    priority: P0
+    preconditions: 已登录，游戏已开始
+    dimension: 正常
+    request:
+      game_id:
+        value: 1001
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        getgameinfo:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  GetGameInfo_参数异常_必填参数缺失:
+    description: GetGameInfo_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，游戏已开始
+    dimension: 参数异常
+    request:
+      game_id:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  GetGameInfo_参数异常_参数类型错误:
+    description: GetGameInfo_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，游戏已开始
+    dimension: 参数异常
+    request:
+      game_id:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  GetGameInfo_参数异常_参数值为空:
+    description: GetGameInfo_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，游戏已开始
+    dimension: 参数异常
+    request:
+      game_id:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  GetGameInfo_参数异常_参数值超出范围:
+    description: GetGameInfo_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，游戏已开始
+    dimension: 参数异常
+    request:
+      game_id:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  GetGameInfo_参数异常_参数格式错误:
+    description: GetGameInfo_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，游戏已开始
+    dimension: 参数异常
+    request:
+      game_id:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid game_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  GetGameInfo_权限安全:
+    description: GetGameInfo_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，游戏已开始
+    dimension: 权限安全
+    request:
+      game_id:
+        value: 1001
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  GetGameInfo_性能边界:
+    description: GetGameInfo_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，游戏已开始
+    dimension: 性能边界
+    request:
+      game_id:
+        value: 1001
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        getgameinfo:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）

@@ -10,6 +10,9 @@ from typing import Dict, Any, Optional
 from framework.config import Config
 from framework.tcp_client import TCPClient
 from framework.protobuf_helper import ProtobufHelper
+from framework.exceptions import EncodingError, ConnectionError, APITestException
+from framework.logger import logger
+from framework.service_registry import ServiceRegistry
 import sys
 import os
 
@@ -212,7 +215,16 @@ class APIClient:
                 }
             
             # 构造请求body
-            body_bytes = self._encode_request_body(service, method, request_data)
+            try:
+                body_bytes = self._encode_request_body(service, method, request_data)
+            except EncodingError as e:
+                logger.error(f"编码请求body失败: {e}")
+                return {
+                    'success': False,
+                    'response': {},
+                    'error_code': e.error_code or 500,
+                    'error_message': str(e)
+                }
             
             # 发送请求
             response = self.tcp_client.send_request(command, op_type, body_bytes)
@@ -328,21 +340,32 @@ class APIClient:
     def _encode_request_body(self, service: str, method: str, request_data: Dict) -> bytes:
         """编码请求body"""
         if not PROTOBUF_AVAILABLE:
+            print(f"⚠ 编码请求body失败: protobuf模块不可用")
             return b''
         
-        try:
-            if service == 'Hall':
-                return self._encode_hall_body_req(method, request_data)
-            elif service == 'Room':
-                return self._encode_room_body_req(method, request_data)
-            elif service == 'Social':
-                return self._encode_social_body_req(method, request_data)
-        except Exception as e:
-            print(f"⚠ 编码请求body失败: {e}")
-            import traceback
-            traceback.print_exc()
+        # 统一服务名大小写（首字母大写）
+        service_normalized = service.capitalize()
         
-        return b''
+        try:
+            if service_normalized == 'Hall':
+                return self._encode_hall_body_req(method, request_data)
+            elif service_normalized == 'Room':
+                return self._encode_room_body_req(method, request_data)
+            elif service_normalized == 'Social':
+                return self._encode_social_body_req(method, request_data)
+            else:
+                error_msg = f"未知的服务 '{service}' (标准化后: '{service_normalized}')"
+                logger.error(f"编码请求body失败: {error_msg}")
+                logger.info(f"支持的服务: Hall, Room, Social")
+                raise EncodingError(error_msg, 500)
+        except EncodingError:
+            raise
+        except Exception as e:
+            error_msg = f"编码请求body失败: {e}"
+            logger.error(error_msg)
+            logger.debug(f"服务: {service}, 方法: {method}, 请求数据: {request_data}")
+            logger.exception("编码异常详情")
+            raise EncodingError(str(e), 500) from e
     
     def _encode_hall_body_req(self, method: str, request_data: Dict) -> bytes:
         """编码HallBodyReq"""
@@ -367,10 +390,21 @@ class APIClient:
             # 填充请求数据
             for key, value in request_data.items():
                 if hasattr(req_msg, key):
-                    setattr(req_msg, key, value)
+                    try:
+                        setattr(req_msg, key, value)
+                    except Exception as e:
+                        logger.error(f"设置字段 {key} 失败: {e}, 值: {value}, 类型: {type(value)}")
+                        raise EncodingError(f"设置字段 {key} 失败: {e}", 500) from e
+                else:
+                    logger.warning(f"请求消息中没有字段 '{key}'，跳过")
             
             # 设置到body_req
             getattr(body_req, field_name).CopyFrom(req_msg)
+        else:
+            error_msg = f"未知的方法 '{method}'"
+            logger.error(f"编码Hall请求body失败: {error_msg}")
+            logger.info(f"支持的方法: {list(method_map.keys())}")
+            raise EncodingError(error_msg, 500)
         
         return body_req.SerializeToString()
     
@@ -395,8 +429,19 @@ class APIClient:
             field_name, req_msg = method_map[method]
             for key, value in request_data.items():
                 if hasattr(req_msg, key):
-                    setattr(req_msg, key, value)
+                    try:
+                        setattr(req_msg, key, value)
+                    except Exception as e:
+                        logger.error(f"设置字段 {key} 失败: {e}, 值: {value}, 类型: {type(value)}")
+                        raise EncodingError(f"设置字段 {key} 失败: {e}", 500) from e
+                else:
+                    logger.warning(f"请求消息中没有字段 '{key}'，跳过")
             getattr(body_req, field_name).CopyFrom(req_msg)
+        else:
+            error_msg = f"未知的方法 '{method}'"
+            logger.error(f"编码Room请求body失败: {error_msg}")
+            logger.info(f"支持的方法: {list(method_map.keys())}")
+            raise EncodingError(error_msg, 500)
         
         return body_req.SerializeToString()
     
@@ -428,16 +473,26 @@ class APIClient:
                     field_descriptor = req_msg.DESCRIPTOR.fields_by_name.get(key)
                     if field_descriptor:
                         # 特殊处理：content 字段需要构造嵌套的 protobuf 消息
-                        if key == 'content' and isinstance(value, dict):
+                        if key == 'content':
                             from client import social_share_pb2
                             content_msg = social_share_pb2.ChatMsgContent()
-                            if 'msg_type' in value:
-                                content_msg.msg_type = value['msg_type']
-                            if 'text' in value and isinstance(value['text'], dict):
+                            
+                            # 如果 value 是 None，创建一个默认的文本消息
+                            if value is None:
+                                # 默认创建一个文本消息
+                                content_msg.msg_type = 1  # TextMsgType
                                 text_msg = social_share_pb2.TextMsgContent()
-                                if 'text' in value['text']:
-                                    text_msg.text = value['text']['text']
+                                text_msg.text = "test message"
                                 content_msg.text.CopyFrom(text_msg)
+                            elif isinstance(value, dict):
+                                # 如果 value 是字典，解析其中的字段
+                                if 'msg_type' in value:
+                                    content_msg.msg_type = value['msg_type']
+                                if 'text' in value and isinstance(value['text'], dict):
+                                    text_msg = social_share_pb2.TextMsgContent()
+                                    if 'text' in value['text']:
+                                        text_msg.text = value['text']['text']
+                                    content_msg.text.CopyFrom(text_msg)
                             getattr(req_msg, key).CopyFrom(content_msg)
                         # 特殊处理：repeated 字段（如 seqs）
                         elif field_descriptor.label == field_descriptor.LABEL_REPEATED:
@@ -447,8 +502,19 @@ class APIClient:
                             else:
                                 field_list.append(value)
                         else:
-                            setattr(req_msg, key, value)
+                            try:
+                                setattr(req_msg, key, value)
+                            except Exception as e:
+                                logger.error(f"设置字段 {key} 失败: {e}, 值: {value}, 类型: {type(value)}")
+                                raise EncodingError(f"设置字段 {key} 失败: {e}", 500) from e
+                    else:
+                        logger.warning(f"请求消息中没有字段 '{key}'，跳过")
             getattr(body_req, field_name).CopyFrom(req_msg)
+        else:
+            error_msg = f"未知的方法 '{method}'"
+            logger.error(f"编码Social请求body失败: {error_msg}")
+            logger.info(f"支持的方法: {list(method_map.keys())}")
+            raise EncodingError(error_msg, 500)
         
         return body_req.SerializeToString()
     

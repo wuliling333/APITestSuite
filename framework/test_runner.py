@@ -14,12 +14,118 @@ class CustomTestResult(unittest.TextTestResult):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.test_instances = {}  # 存储测试实例
+        self.test_run_log = []  # 记录测试运行日志
     
     def startTest(self, test):
         super().startTest(test)
         # 保存测试实例
         test_id = str(test)
         self.test_instances[test_id] = test
+        
+        # 提取测试方法名
+        test_method_name = getattr(test, '_testMethodName', 'Unknown')
+        test_class_name = test.__class__.__name__ if hasattr(test, '__class__') else 'Unknown'
+        
+        # 记录测试开始
+        log_entry = {
+            'test_id': test_id,
+            'test_class': test_class_name,
+            'test_method': test_method_name,
+            'status': 'running',
+            'started': True
+        }
+        self.test_run_log.append(log_entry)
+        
+        # 打印测试开始信息
+        print(f"\n{'='*80}")
+        print(f"▶ 开始运行测试: {test_class_name}.{test_method_name}")
+        print(f"{'='*80}")
+    
+    def addSuccess(self, test):
+        super().addSuccess(test)
+        test_id = str(test)
+        test_method_name = getattr(test, '_testMethodName', 'Unknown')
+        test_class_name = test.__class__.__name__ if hasattr(test, '__class__') else 'Unknown'
+        
+        # 检查是否有 test_result（说明接口被调用了）
+        has_test_result = hasattr(test, 'test_result') and test.test_result is not None
+        has_response = False
+        if has_test_result:
+            response = test.test_result.get('response', {})
+            has_response = bool(response)
+        
+        # 更新日志
+        for log in self.test_run_log:
+            if log['test_id'] == test_id:
+                log['status'] = 'passed'
+                log['has_test_result'] = has_test_result
+                log['has_response'] = has_response
+                break
+        
+        # 打印测试通过信息
+        print(f"\n✓ 测试通过: {test_class_name}.{test_method_name}")
+        if has_test_result:
+            print(f"  ✓ 接口已调用，返回数据: {'有' if has_response else '无'}")
+        else:
+            print(f"  ⚠ 警告: 测试通过但没有 test_result（可能没有调用接口）")
+    
+    def addFailure(self, test, err):
+        super().addFailure(test, err)
+        test_id = str(test)
+        test_method_name = getattr(test, '_testMethodName', 'Unknown')
+        test_class_name = test.__class__.__name__ if hasattr(test, '__class__') else 'Unknown'
+        
+        # 检查是否有 test_result
+        has_test_result = hasattr(test, 'test_result') and test.test_result is not None
+        has_response = False
+        if has_test_result:
+            response = test.test_result.get('response', {})
+            has_response = bool(response)
+        
+        # 更新日志
+        for log in self.test_run_log:
+            if log['test_id'] == test_id:
+                log['status'] = 'failed'
+                log['has_test_result'] = has_test_result
+                log['has_response'] = has_response
+                log['error'] = str(err[1])[:200] if err else ''
+                break
+        
+        # 打印测试失败信息
+        print(f"\n✗ 测试失败: {test_class_name}.{test_method_name}")
+        if has_test_result:
+            print(f"  ✓ 接口已调用，返回数据: {'有' if has_response else '无'}")
+        else:
+            print(f"  ⚠ 警告: 测试失败且没有 test_result（可能在调用接口前就失败了）")
+    
+    def addError(self, test, err):
+        super().addError(test, err)
+        test_id = str(test)
+        test_method_name = getattr(test, '_testMethodName', 'Unknown')
+        test_class_name = test.__class__.__name__ if hasattr(test, '__class__') else 'Unknown'
+        
+        # 检查是否有 test_result
+        has_test_result = hasattr(test, 'test_result') and test.test_result is not None
+        has_response = False
+        if has_test_result:
+            response = test.test_result.get('response', {})
+            has_response = bool(response)
+        
+        # 更新日志
+        for log in self.test_run_log:
+            if log['test_id'] == test_id:
+                log['status'] = 'error'
+                log['has_test_result'] = has_test_result
+                log['has_response'] = has_response
+                log['error'] = str(err[1])[:200] if err else ''
+                break
+        
+        # 打印测试错误信息
+        print(f"\n✗ 测试错误: {test_class_name}.{test_method_name}")
+        if has_test_result:
+            print(f"  ✓ 接口已调用，返回数据: {'有' if has_response else '无'}")
+        else:
+            print(f"  ⚠ 警告: 测试错误且没有 test_result（可能在调用接口前就出错了）")
 
 
 class TestRunner:
@@ -65,6 +171,74 @@ class TestRunner:
         # 保存测试实例引用以便后续收集结果
         self.test_instances = getattr(result, 'test_instances', {})
         
+        # 打印测试运行日志摘要
+        test_run_log = getattr(result, 'test_run_log', [])
+        if test_run_log:
+            print("\n" + "=" * 80)
+            print("测试运行日志摘要")
+            print("=" * 80)
+            
+            # 按接口分组统计
+            interface_stats = {}
+            for log in test_run_log:
+                test_method = log.get('test_method', 'Unknown')
+                # 提取接口名（例如：test_sendmessage_参数异常 -> SendMessage）
+                if '_' in test_method:
+                    parts = test_method.split('_')
+                    interface_name = parts[1].capitalize() if len(parts) > 1 else test_method
+                else:
+                    interface_name = test_method.replace('test_', '').capitalize()
+                
+                if interface_name not in interface_stats:
+                    interface_stats[interface_name] = {
+                        'total': 0,
+                        'passed': 0,
+                        'failed': 0,
+                        'error': 0,
+                        'has_test_result': 0,
+                        'has_response': 0,
+                        'no_test_result': 0
+                    }
+                
+                stats = interface_stats[interface_name]
+                stats['total'] += 1
+                status = log.get('status', 'unknown')
+                if status == 'passed':
+                    stats['passed'] += 1
+                elif status == 'failed':
+                    stats['failed'] += 1
+                elif status == 'error':
+                    stats['error'] += 1
+                
+                if log.get('has_test_result'):
+                    stats['has_test_result'] += 1
+                    if log.get('has_response'):
+                        stats['has_response'] += 1
+                else:
+                    stats['no_test_result'] += 1
+            
+            # 打印统计信息
+            for interface_name, stats in sorted(interface_stats.items()):
+                print(f"\n{interface_name} 接口:")
+                print(f"  总测试数: {stats['total']}")
+                print(f"  通过: {stats['passed']}, 失败: {stats['failed']}, 错误: {stats['error']}")
+                print(f"  接口调用情况: {stats['has_test_result']} 个测试调用了接口, {stats['no_test_result']} 个测试未调用接口")
+                print(f"  返回数据情况: {stats['has_response']} 个测试有返回数据")
+                
+                # 列出没有调用接口的测试
+                if stats['no_test_result'] > 0:
+                    print(f"  ⚠ 警告: 以下测试没有调用接口:")
+                    for log in test_run_log:
+                        test_method = log.get('test_method', 'Unknown')
+                        if '_' in test_method:
+                            parts = test_method.split('_')
+                            log_interface = parts[1].capitalize() if len(parts) > 1 else test_method
+                        else:
+                            log_interface = test_method.replace('test_', '').capitalize()
+                        
+                        if log_interface == interface_name and not log.get('has_test_result'):
+                            print(f"    - {test_method}")
+        
         # 收集结果
         test_results = {
             'total': result.testsRun,
@@ -85,18 +259,23 @@ class TestRunner:
         return test_results
     
     def _organize_results_by_service(self, result) -> Dict[str, Any]:
-        """按服务组织测试结果"""
+        """按服务组织测试结果（直接使用测试运行的实际结果）"""
         services = {}
         
         # 获取所有测试实例
         test_instances = getattr(result, 'test_instances', {})
+        print(f"📋 收集到的测试实例总数: {len(test_instances)}")
         processed_test_ids = set()
         
         # 处理失败的测试
         for test, error_msg in result.failures:
             test_id = str(test)
             processed_test_ids.add(test_id)
-            service_name = self._extract_service_name(test_id)
+            # 优先从测试实例提取服务名（更准确）
+            service_name = self._extract_service_name_from_test(test).lower()
+            if service_name == 'unknown':
+                # 如果无法从测试实例提取，从测试ID提取
+                service_name = self._extract_service_name(test_id)
             
             if service_name not in services:
                 services[service_name] = {'test_results': []}
@@ -108,7 +287,11 @@ class TestRunner:
         for test, error_msg in result.errors:
             test_id = str(test)
             processed_test_ids.add(test_id)
-            service_name = self._extract_service_name(test_id)
+            # 优先从测试实例提取服务名（更准确）
+            service_name = self._extract_service_name_from_test(test).lower()
+            if service_name == 'unknown':
+                # 如果无法从测试实例提取，从测试ID提取
+                service_name = self._extract_service_name(test_id)
             
             if service_name not in services:
                 services[service_name] = {'test_results': []}
@@ -119,13 +302,27 @@ class TestRunner:
         # 处理成功的测试（不在失败或错误列表中）
         for test_id, test_instance in test_instances.items():
             if test_id not in processed_test_ids:
-                service_name = self._extract_service_name(test_id)
+                # 优先从测试实例提取服务名（更准确）
+                service_name = self._extract_service_name_from_test(test_instance).lower()
+                if service_name == 'unknown':
+                    # 如果无法从测试实例提取，从测试ID提取
+                    service_name = self._extract_service_name(test_id)
                 
                 if service_name not in services:
                     services[service_name] = {'test_results': []}
                 
                 test_info = self._extract_test_info(test_instance, test_id, 'success', '')
                 services[service_name]['test_results'].append(test_info)
+        
+        # 打印每个服务的测试结果数量
+        print(f"\n📊 按服务组织的测试结果:")
+        for service_name, service_data in services.items():
+            test_count = len(service_data.get('test_results', []))
+            print(f"  {service_name.upper()}: {test_count} 个测试结果")
+            # 打印前5个测试用例名称
+            for i, test in enumerate(service_data.get('test_results', [])[:5]):
+                test_name = test.get('name', test.get('method', 'Unknown'))
+                print(f"    - {test_name}")
         
         return services
     
@@ -149,26 +346,68 @@ class TestRunner:
             test_name = test_result.get('name') or test_result.get('method') or method_name
             error_message = test_result.get('error_message', '')
             
-            # 如果 error 参数包含更详细的错误信息（如 traceback），尝试提取其中的关键错误信息
+            # 如果 error 参数包含更详细的错误信息（如 traceback），提取关键错误信息
             detailed_error = ''
-            if error and 'rpc error' in error.lower():
-                # 从 traceback 中提取 rpc error 相关信息
+            if error:
+                # 提取 AssertionError 或其他关键错误信息
                 error_lines = error.split('\n')
+                # 查找 AssertionError 行
+                assertion_error_line = ''
                 for line in error_lines:
-                    if 'rpc error' in line.lower() or 'connection error' in line.lower() or 'unavailable' in line.lower():
-                        detailed_error = line.strip()
+                    if 'AssertionError' in line:
+                        assertion_error_line = line.strip()
                         break
-                # 如果没有找到，尝试从整个 error 中提取
-                if not detailed_error and 'err:' in error:
+                
+                # 如果找到 AssertionError，提取错误消息
+                if assertion_error_line:
+                    # 提取 AssertionError 后面的错误消息
+                    if ':' in assertion_error_line:
+                        assertion_error_line = assertion_error_line.split(':', 1)[1].strip()
+                    detailed_error = assertion_error_line
+                elif 'rpc error' in error.lower():
+                    # 从 traceback 中提取 rpc error 相关信息
                     for line in error_lines:
-                        if 'err:' in line.lower():
+                        if 'rpc error' in line.lower() or 'connection error' in line.lower() or 'unavailable' in line.lower():
                             detailed_error = line.strip()
                             break
+                    # 如果没有找到，尝试从整个 error 中提取
+                    if not detailed_error and 'err:' in error:
+                        for line in error_lines:
+                            if 'err:' in line.lower():
+                                detailed_error = line.strip()
+                                break
+                else:
+                    # 如果没有找到特定错误，提取第一行非空行（通常是错误类型和消息）
+                    for line in error_lines:
+                        line = line.strip()
+                        if line and not line.startswith('File') and not line.startswith('Traceback'):
+                            detailed_error = line
+                            break
             
-            # 合并 error_message 和 detailed_error
+            # 合并 error_message 和 detailed_error（包括完整的 error 信息）
             full_error_message = error_message
-            if detailed_error and detailed_error not in error_message:
-                full_error_message = f"{error_message}\n{detailed_error}" if error_message else detailed_error
+            if detailed_error:
+                if error_message and detailed_error not in error_message:
+                    full_error_message = f"{error_message}\n{detailed_error}"
+                elif not error_message:
+                    full_error_message = detailed_error
+            
+            # 如果 error 参数存在且包含完整 traceback，也添加到错误信息中（截断到合理长度）
+            if error and error not in full_error_message:
+                # 提取 error 中的关键信息（最后几行，通常是错误消息）
+                error_lines = error.split('\n')
+                # 获取最后3行非空行（通常是错误信息）
+                last_error_lines = []
+                for line in reversed(error_lines):
+                    line = line.strip()
+                    if line and not line.startswith('File') and not line.startswith('Traceback'):
+                        last_error_lines.insert(0, line)
+                        if len(last_error_lines) >= 3:
+                            break
+                if last_error_lines:
+                    error_summary = '\n'.join(last_error_lines)
+                    if error_summary not in full_error_message:
+                        full_error_message = f"{full_error_message}\n{error_summary}" if full_error_message else error_summary
             
             # 使用完整的服务器响应（test_result中的response字段已经包含了完整的result结构）
             full_response = test_result.get('response', {})
@@ -181,45 +420,9 @@ class TestRunner:
                     'error_message': test_result.get('error_message', '')
                 }
             
-            # 获取服务器协议定义的请求参数结构
+            # 直接使用实际运行的请求数据，不进行任何格式化或推断
             actual_request = test_result.get('request', {})
-            request_to_display = actual_request  # 默认使用实际请求
-            
-            try:
-                from framework.proto_request_formatter import ProtoRequestFormatter
-                # 从测试类名或方法名提取服务名
-                service_name = self._extract_service_name_from_test(test)
-                if service_name:
-                    proto_request_structure = ProtoRequestFormatter.get_request_structure(
-                        service_name.capitalize(), 
-                        test_result.get('method', method_name)
-                    )
-                    
-                    if proto_request_structure:
-                        # 如果有协议定义，创建一个包含类型信息的请求结构
-                        formatted_request = {}
-                        for field_name, field_type in proto_request_structure.items():
-                            if field_name in actual_request:
-                                formatted_request[field_name] = {
-                                    'value': actual_request[field_name],
-                                    'type': field_type
-                                }
-                            else:
-                                formatted_request[field_name] = {
-                                    'value': None,
-                                    'type': field_type
-                                }
-                        # 如果实际请求中有协议定义中没有的字段（不应该发生，但为了兼容性保留）
-                        for field_name, field_value in actual_request.items():
-                            if field_name not in formatted_request:
-                                formatted_request[field_name] = {
-                                    'value': field_value,
-                                    'type': 'unknown'
-                                }
-                        request_to_display = formatted_request
-            except Exception as e:
-                # 如果获取协议定义失败，使用实际请求
-                pass
+            request_to_display = actual_request  # 直接使用实际请求，不添加类型信息
             
             # 获取请求方法（TCP/gRPC，不是HTTP的POST/GET）
             # 这个系统使用TCP协议通过Gate服务器通信，使用protobuf序列化
@@ -234,7 +437,9 @@ class TestRunner:
                 'error_code': test_result.get('error_code'),
                 'error_message': full_error_message,
                 'preconditions': test_result.get('preconditions', []),
-                'problem_analysis': self._get_problem_analysis(test_name, full_error_message, test_result.get('request', {}), test_result.get('preconditions', []))
+                'problem_analysis': self._get_problem_analysis(test_name, full_error_message, test_result.get('request', {}), test_result.get('preconditions', [])),
+                'dimension': test_result.get('dimension'),  # 测试维度（正常/参数异常/业务异常等）
+                'abnormal_type': test_result.get('abnormal_type')  # 异常类型
             })
         
         return test_info
@@ -271,7 +476,7 @@ class TestRunner:
         if preconditions:
             analysis_parts.append("前置条件:")
             for precondition in preconditions:
-                analysis_parts.append(f"  ✓ {precondition}")
+                analysis_parts.append(f"  • {precondition}")
         
         if not error_message:
             return "\n".join(analysis_parts) if analysis_parts else ""
@@ -431,28 +636,39 @@ class TestRunner:
     
     def _extract_service_name(self, test_name: str) -> str:
         """从测试名称提取服务名"""
-        if 'hall' in test_name.lower():
+        test_name_lower = test_name.lower()
+        # 检查测试类名（TestHall, TestRoom, TestSocial）
+        # 测试ID格式通常是: test_method_name (generated_tests.test_hall.TestHall)
+        if 'testhall' in test_name_lower or ('test_hall' in test_name_lower and 'hall' in test_name_lower):
             return 'hall'
-        elif 'room' in test_name.lower():
+        elif 'testroom' in test_name_lower or ('test_room' in test_name_lower and 'room' in test_name_lower):
             return 'room'
-        elif 'social' in test_name.lower():
+        elif 'testsocial' in test_name_lower or ('test_social' in test_name_lower and 'social' in test_name_lower):
+            return 'social'
+        # 如果包含 hall/room/social 关键字，也识别
+        elif 'hall' in test_name_lower and 'room' not in test_name_lower and 'social' not in test_name_lower:
+            return 'hall'
+        elif 'room' in test_name_lower and 'social' not in test_name_lower:
+            return 'room'
+        elif 'social' in test_name_lower:
             return 'social'
         return 'unknown'
     
     def _extract_service_name_from_test(self, test) -> str:
         """从测试实例提取服务名"""
-        # 从测试类名提取服务名
+        # 从测试类名提取服务名（最准确的方法）
         test_class_name = test.__class__.__name__ if hasattr(test, '__class__') else ''
         if 'Hall' in test_class_name:
-            return 'Hall'
+            return 'hall'
         elif 'Room' in test_class_name:
-            return 'Room'
+            return 'room'
         elif 'Social' in test_class_name:
-            return 'Social'
+            return 'social'
         
         # 如果无法从类名提取，尝试从测试方法名提取
         test_method_name = getattr(test, '_testMethodName', '')
-        return self._extract_service_name(test_method_name).capitalize()
+        service_name = self._extract_service_name(test_method_name)
+        return service_name if service_name != 'unknown' else 'unknown'
     
     def _collect_test_results(self, suite, result):
         """收集所有测试实例的结果"""

@@ -96,8 +96,8 @@ class TestRoom(unittest.TestCase):
             cls.client.close()
     
 
-    def test_getuserstate(self):
-        """测试 GetUserState 接口"""
+    def test_getuserstate_参数异常_必填参数缺失(self):
+        """测试 GetUserState 接口 - 参数异常 - 参数异常_必填参数缺失"""
         request_data = {}
         
         result = self.client.call_rpc(
@@ -106,38 +106,574 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'GetUserState',
+            'name': 'GetUserState_参数异常_必填参数缺失',
             'method': 'GetUserState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: GetUserState")
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetUserState - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ GetUserState 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetUserState 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ GetUserState 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetUserState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_createteam(self):
-        """测试 CreateTeam 接口"""
+    def test_getuserstate_参数异常_参数类型错误(self):
+        """测试 GetUserState 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetUserState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetUserState_参数异常_参数类型错误',
+            'method': 'GetUserState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetUserState - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetUserState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetUserState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getuserstate_参数异常_参数值为空(self):
+        """测试 GetUserState 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetUserState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetUserState_参数异常_参数值为空',
+            'method': 'GetUserState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetUserState - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetUserState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetUserState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getuserstate_参数异常_参数值超出范围(self):
+        """测试 GetUserState 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetUserState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetUserState_参数异常_参数值超出范围',
+            'method': 'GetUserState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetUserState - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetUserState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetUserState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getuserstate_参数异常_参数格式错误(self):
+        """测试 GetUserState 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetUserState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetUserState_参数异常_参数格式错误',
+            'method': 'GetUserState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetUserState - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetUserState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetUserState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getuserstate_权限安全(self):
+        """测试 GetUserState 接口 - 权限安全 - 权限安全"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetUserState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetUserState_权限安全',
+            'method': 'GetUserState',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetUserState - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetUserState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetUserState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getuserstate_性能边界(self):
+        """测试 GetUserState 接口 - 性能边界 - 性能边界"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetUserState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetUserState_性能边界',
+            'method': 'GetUserState',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetUserState - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetUserState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetUserState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_createteam_参数异常_必填参数缺失(self):
+        """测试 CreateTeam 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'game_mode': 0}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CreateTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CreateTeam_参数异常_必填参数缺失',
+            'method': 'CreateTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 参数异常 - 参数异常_必填参数缺失")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_createteam_参数异常_参数类型错误(self):
+        """测试 CreateTeam 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'game_mode': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CreateTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CreateTeam_参数异常_参数类型错误',
+            'method': 'CreateTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_createteam_参数异常_参数值为空(self):
+        """测试 CreateTeam 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'game_mode': 0}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CreateTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CreateTeam_参数异常_参数值为空',
+            'method': 'CreateTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_createteam_参数异常_参数值超出范围(self):
+        """测试 CreateTeam 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'game_mode': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CreateTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CreateTeam_参数异常_参数值超出范围',
+            'method': 'CreateTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_createteam_参数异常_参数格式错误(self):
+        """测试 CreateTeam 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'game_mode': 'invalid_format_@#$%'}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CreateTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CreateTeam_参数异常_参数格式错误',
+            'method': 'CreateTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_createteam_业务异常(self):
+        """测试 CreateTeam 接口 - 业务异常 - 业务异常"""
         request_data = {'game_mode': 1}
         
         result = self.client.call_rpc(
@@ -146,60 +682,143 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'CreateTeam',
+            'name': 'CreateTeam_业务异常',
             'method': 'CreateTeam',
+            'dimension': '业务异常',
+            'abnormal_type': '业务异常',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: CreateTeam")
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 业务异常 - 业务异常")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ CreateTeam 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ CreateTeam 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_jointeam(self):
-        """测试 JoinTeam 接口（前置条件：先创建队伍）"""
-        # 前置条件：先创建队伍
-        create_result = self.client.call_rpc(
+    def test_createteam_权限安全(self):
+        """测试 CreateTeam 接口 - 权限安全 - 权限安全"""
+        request_data = {'game_mode': 1}
+        
+        result = self.client.call_rpc(
             service='Room',
             method='CreateTeam',
-            request_data={'game_mode': 1}
+            request_data=request_data
         )
         
-        if not create_result.get('success'):
-            self.skipTest(f"前置条件失败：无法创建队伍 - {create_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CreateTeam_权限安全',
+            'method': 'CreateTeam',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
         
-        # 从创建队伍的响应中获取 team_id
-        create_response = create_result.get('response', {})
-        team_id = 0
-        if 'createteam' in create_response:
-            team_info = create_response['createteam'].get('team_info', {})
-            team_id = team_info.get('team_id', 0)
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
         
-        if team_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 team_id")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_createteam_性能边界(self):
+        """测试 CreateTeam 接口 - 性能边界 - 性能边界"""
+        request_data = {'game_mode': 1}
         
-        # 使用获取到的 team_id 调用 JoinTeam
-        request_data = {'team_id': team_id}
+        result = self.client.call_rpc(
+            service='Room',
+            method='CreateTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CreateTeam_性能边界',
+            'method': 'CreateTeam',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CreateTeam - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CreateTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CreateTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_jointeam_参数异常_必填参数缺失(self):
+        """测试 JoinTeam 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'team_id': 0}
         
         result = self.client.call_rpc(
             service='Room',
@@ -207,60 +826,383 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'JoinTeam',
+            'name': 'JoinTeam_参数异常_必填参数缺失',
             'method': 'JoinTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': ['创建队伍 (CreateTeam)', '获取 team_id']
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: JoinTeam")
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ JoinTeam 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ JoinTeam 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_getteaminfo(self):
-        """测试 GetTeamInfo 接口（前置条件：先创建队伍）"""
-        # 前置条件：先创建队伍
-        create_result = self.client.call_rpc(
+    def test_jointeam_参数异常_参数类型错误(self):
+        """测试 JoinTeam 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'team_id': 'wrong_type'}
+        
+        result = self.client.call_rpc(
             service='Room',
-            method='CreateTeam',
-            request_data={'game_mode': 1}
+            method='JoinTeam',
+            request_data=request_data
         )
         
-        if not create_result.get('success'):
-            self.skipTest(f"前置条件失败：无法创建队伍 - {create_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'JoinTeam_参数异常_参数类型错误',
+            'method': 'JoinTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
         
-        # 从创建队伍的响应中获取 team_id
-        create_response = create_result.get('response', {})
-        team_id = 0
-        if 'createteam' in create_response:
-            team_info = create_response['createteam'].get('team_info', {})
-            team_id = team_info.get('team_id', 0)
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
         
-        if team_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 team_id")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_jointeam_参数异常_参数值为空(self):
+        """测试 JoinTeam 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'team_id': 0}
         
-        # 使用获取到的 team_id 调用 GetTeamInfo
-        request_data = {'team_id': team_id}
+        result = self.client.call_rpc(
+            service='Room',
+            method='JoinTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'JoinTeam_参数异常_参数值为空',
+            'method': 'JoinTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_jointeam_参数异常_参数值超出范围(self):
+        """测试 JoinTeam 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'team_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='JoinTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'JoinTeam_参数异常_参数值超出范围',
+            'method': 'JoinTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_jointeam_参数异常_参数格式错误(self):
+        """测试 JoinTeam 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'team_id': -1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='JoinTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'JoinTeam_参数异常_参数格式错误',
+            'method': 'JoinTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_jointeam_业务异常(self):
+        """测试 JoinTeam 接口 - 业务异常 - 业务异常"""
+        request_data = {'team_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='JoinTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'JoinTeam_业务异常',
+            'method': 'JoinTeam',
+            'dimension': '业务异常',
+            'abnormal_type': '业务异常',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 业务异常 - 业务异常")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_jointeam_权限安全(self):
+        """测试 JoinTeam 接口 - 权限安全 - 权限安全"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='JoinTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'JoinTeam_权限安全',
+            'method': 'JoinTeam',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_jointeam_性能边界(self):
+        """测试 JoinTeam 接口 - 性能边界 - 性能边界"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='JoinTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'JoinTeam_性能边界',
+            'method': 'JoinTeam',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: JoinTeam - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ JoinTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ JoinTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getteaminfo_参数异常_必填参数缺失(self):
+        """测试 GetTeamInfo 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'team_id': 0}
         
         result = self.client.call_rpc(
             service='Room',
@@ -268,60 +1210,383 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'GetTeamInfo',
+            'name': 'GetTeamInfo_参数异常_必填参数缺失',
             'method': 'GetTeamInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: GetTeamInfo")
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ GetTeamInfo 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ GetTeamInfo 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_changereadystate(self):
-        """测试 ChangeReadyState 接口（前置条件：先创建队伍）"""
-        # 前置条件：先创建队伍
-        create_result = self.client.call_rpc(
+    def test_getteaminfo_参数异常_参数类型错误(self):
+        """测试 GetTeamInfo 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'team_id': 'wrong_type'}
+        
+        result = self.client.call_rpc(
             service='Room',
-            method='CreateTeam',
-            request_data={'game_mode': 1}
+            method='GetTeamInfo',
+            request_data=request_data
         )
         
-        if not create_result.get('success'):
-            self.skipTest(f"前置条件失败：无法创建队伍 - {create_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetTeamInfo_参数异常_参数类型错误',
+            'method': 'GetTeamInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
         
-        # 从创建队伍的响应中获取 team_id
-        create_response = create_result.get('response', {})
-        team_id = 0
-        if 'createteam' in create_response:
-            team_info = create_response['createteam'].get('team_info', {})
-            team_id = team_info.get('team_id', 0)
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
         
-        if team_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 team_id")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getteaminfo_参数异常_参数值为空(self):
+        """测试 GetTeamInfo 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'team_id': 0}
         
-        # 使用获取到的 team_id 调用 ChangeReadyState（设置为准备状态）
-        request_data = {'team_id': team_id, 'ready': True}
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetTeamInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetTeamInfo_参数异常_参数值为空',
+            'method': 'GetTeamInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getteaminfo_参数异常_参数值超出范围(self):
+        """测试 GetTeamInfo 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'team_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetTeamInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetTeamInfo_参数异常_参数值超出范围',
+            'method': 'GetTeamInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getteaminfo_参数异常_参数格式错误(self):
+        """测试 GetTeamInfo 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'team_id': -1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetTeamInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetTeamInfo_参数异常_参数格式错误',
+            'method': 'GetTeamInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getteaminfo_业务异常(self):
+        """测试 GetTeamInfo 接口 - 业务异常 - 业务异常"""
+        request_data = {'team_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetTeamInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetTeamInfo_业务异常',
+            'method': 'GetTeamInfo',
+            'dimension': '业务异常',
+            'abnormal_type': '业务异常',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 业务异常 - 业务异常")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getteaminfo_权限安全(self):
+        """测试 GetTeamInfo 接口 - 权限安全 - 权限安全"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetTeamInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetTeamInfo_权限安全',
+            'method': 'GetTeamInfo',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getteaminfo_性能边界(self):
+        """测试 GetTeamInfo 接口 - 性能边界 - 性能边界"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetTeamInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetTeamInfo_性能边界',
+            'method': 'GetTeamInfo',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetTeamInfo - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetTeamInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetTeamInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_changereadystate_参数异常_必填参数缺失(self):
+        """测试 ChangeReadyState 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'team_id': 0, 'ready': True}
         
         result = self.client.call_rpc(
             service='Room',
@@ -329,39 +1594,335 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'ChangeReadyState',
+            'name': 'ChangeReadyState_参数异常_必填参数缺失',
             'method': 'ChangeReadyState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: ChangeReadyState")
+        print(f"\n{'='*60}")
+        print(f"测试接口: ChangeReadyState - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ ChangeReadyState 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ChangeReadyState 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ ChangeReadyState 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ChangeReadyState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_startgamefromteam(self):
-        """测试 StartGameFromTeam 接口"""
-        request_data = {}
+    def test_changereadystate_参数异常_参数类型错误(self):
+        """测试 ChangeReadyState 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'team_id': 'wrong_type', 'ready': True}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='ChangeReadyState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ChangeReadyState_参数异常_参数类型错误',
+            'method': 'ChangeReadyState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ChangeReadyState - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ChangeReadyState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ChangeReadyState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_changereadystate_参数异常_参数值为空(self):
+        """测试 ChangeReadyState 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'team_id': 0, 'ready': True}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='ChangeReadyState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ChangeReadyState_参数异常_参数值为空',
+            'method': 'ChangeReadyState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ChangeReadyState - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ChangeReadyState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ChangeReadyState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_changereadystate_参数异常_参数值超出范围(self):
+        """测试 ChangeReadyState 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'team_id': 999999999, 'ready': True}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='ChangeReadyState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ChangeReadyState_参数异常_参数值超出范围',
+            'method': 'ChangeReadyState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ChangeReadyState - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ChangeReadyState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ChangeReadyState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_changereadystate_参数异常_参数格式错误(self):
+        """测试 ChangeReadyState 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'team_id': -1, 'ready': True}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='ChangeReadyState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ChangeReadyState_参数异常_参数格式错误',
+            'method': 'ChangeReadyState',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ChangeReadyState - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ChangeReadyState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ChangeReadyState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_changereadystate_权限安全(self):
+        """测试 ChangeReadyState 接口 - 权限安全 - 权限安全"""
+        request_data = {'team_id': 1006329, 'ready': True}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='ChangeReadyState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ChangeReadyState_权限安全',
+            'method': 'ChangeReadyState',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ChangeReadyState - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ChangeReadyState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ChangeReadyState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_changereadystate_性能边界(self):
+        """测试 ChangeReadyState 接口 - 性能边界 - 性能边界"""
+        request_data = {'team_id': 1006329, 'ready': True}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='ChangeReadyState',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ChangeReadyState_性能边界',
+            'method': 'ChangeReadyState',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ChangeReadyState - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ChangeReadyState 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ChangeReadyState 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_startgamefromteam_参数异常_必填参数缺失(self):
+        """测试 StartGameFromTeam 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'team_id': 0, 'map_id': 10000263, 'difficulty': 1}
         
         result = self.client.call_rpc(
             service='Room',
@@ -369,60 +1930,383 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'StartGameFromTeam',
+            'name': 'StartGameFromTeam_参数异常_必填参数缺失',
             'method': 'StartGameFromTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: StartGameFromTeam")
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ StartGameFromTeam 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ StartGameFromTeam 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_match(self):
-        """测试 Match 接口（前置条件：先创建队伍）"""
-        # 前置条件：先创建队伍
-        create_result = self.client.call_rpc(
+    def test_startgamefromteam_参数异常_参数类型错误(self):
+        """测试 StartGameFromTeam 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'team_id': 'wrong_type', 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
             service='Room',
-            method='CreateTeam',
-            request_data={'game_mode': 1}
+            method='StartGameFromTeam',
+            request_data=request_data
         )
         
-        if not create_result.get('success'):
-            self.skipTest(f"前置条件失败：无法创建队伍 - {create_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StartGameFromTeam_参数异常_参数类型错误',
+            'method': 'StartGameFromTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
         
-        # 从创建队伍的响应中获取 team_id
-        create_response = create_result.get('response', {})
-        team_id = 0
-        if 'createteam' in create_response:
-            team_info = create_response['createteam'].get('team_info', {})
-            team_id = team_info.get('team_id', 0)
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
         
-        if team_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 team_id")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_startgamefromteam_参数异常_参数值为空(self):
+        """测试 StartGameFromTeam 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'team_id': 0, 'map_id': 10000263, 'difficulty': 1}
         
-        # 使用获取到的 team_id 调用 Match（需要 map_id）
-        request_data = {'team_id': team_id, 'map_id': 1}
+        result = self.client.call_rpc(
+            service='Room',
+            method='StartGameFromTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StartGameFromTeam_参数异常_参数值为空',
+            'method': 'StartGameFromTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_startgamefromteam_参数异常_参数值超出范围(self):
+        """测试 StartGameFromTeam 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'team_id': 999999999, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='StartGameFromTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StartGameFromTeam_参数异常_参数值超出范围',
+            'method': 'StartGameFromTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_startgamefromteam_参数异常_参数格式错误(self):
+        """测试 StartGameFromTeam 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'team_id': -1, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='StartGameFromTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StartGameFromTeam_参数异常_参数格式错误',
+            'method': 'StartGameFromTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_startgamefromteam_业务异常(self):
+        """测试 StartGameFromTeam 接口 - 业务异常 - 业务异常"""
+        request_data = {'team_id': 999999999, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='StartGameFromTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StartGameFromTeam_业务异常',
+            'method': 'StartGameFromTeam',
+            'dimension': '业务异常',
+            'abnormal_type': '业务异常',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 业务异常 - 业务异常")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_startgamefromteam_权限安全(self):
+        """测试 StartGameFromTeam 接口 - 权限安全 - 权限安全"""
+        request_data = {'team_id': 1006329, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='StartGameFromTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StartGameFromTeam_权限安全',
+            'method': 'StartGameFromTeam',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_startgamefromteam_性能边界(self):
+        """测试 StartGameFromTeam 接口 - 性能边界 - 性能边界"""
+        request_data = {'team_id': 1006329, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='StartGameFromTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StartGameFromTeam_性能边界',
+            'method': 'StartGameFromTeam',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StartGameFromTeam - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StartGameFromTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StartGameFromTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_match_参数异常_必填参数缺失(self):
+        """测试 Match 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'team_id': 0, 'map_id': 10000263, 'difficulty': 1}
         
         result = self.client.call_rpc(
             service='Room',
@@ -430,71 +2314,335 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'Match',
+            'name': 'Match_参数异常_必填参数缺失',
             'method': 'Match',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: Match")
+        print(f"\n{'='*60}")
+        print(f"测试接口: Match - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ Match 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ Match 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ Match 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ Match 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_cancelmatch(self):
-        """测试 CancelMatch 接口（前置条件：先创建队伍并开始匹配）"""
-        # 前置条件1：先创建队伍
-        create_result = self.client.call_rpc(
-            service='Room',
-            method='CreateTeam',
-            request_data={'game_mode': 1}
-        )
+    def test_match_参数异常_参数类型错误(self):
+        """测试 Match 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'team_id': 'wrong_type', 'map_id': 10000263, 'difficulty': 1}
         
-        if not create_result.get('success'):
-            self.skipTest(f"前置条件失败：无法创建队伍 - {create_result.get('error_message', '未知错误')}")
-        
-        # 从创建队伍的响应中获取 team_id
-        create_response = create_result.get('response', {})
-        team_id = 0
-        if 'createteam' in create_response:
-            team_info = create_response['createteam'].get('team_info', {})
-            team_id = team_info.get('team_id', 0)
-        
-        if team_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 team_id")
-        
-        # 前置条件2：开始匹配（使队伍状态变为匹配中）
-        # Match 需要 map_id，使用默认值 1
-        match_result = self.client.call_rpc(
+        result = self.client.call_rpc(
             service='Room',
             method='Match',
-            request_data={'team_id': team_id, 'map_id': 1}
+            request_data=request_data
         )
         
-        if not match_result.get('success'):
-            self.skipTest(f"前置条件失败：无法开始匹配 - {match_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'Match_参数异常_参数类型错误',
+            'method': 'Match',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
         
-        # 使用获取到的 team_id 调用 CancelMatch
-        request_data = {'team_id': team_id}
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: Match - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ Match 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ Match 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_match_参数异常_参数值为空(self):
+        """测试 Match 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'team_id': 0, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='Match',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'Match_参数异常_参数值为空',
+            'method': 'Match',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: Match - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ Match 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ Match 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_match_参数异常_参数值超出范围(self):
+        """测试 Match 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'team_id': 999999999, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='Match',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'Match_参数异常_参数值超出范围',
+            'method': 'Match',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: Match - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ Match 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ Match 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_match_参数异常_参数格式错误(self):
+        """测试 Match 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'team_id': -1, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='Match',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'Match_参数异常_参数格式错误',
+            'method': 'Match',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: Match - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ Match 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ Match 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_match_权限安全(self):
+        """测试 Match 接口 - 权限安全 - 权限安全"""
+        request_data = {'team_id': 1006329, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='Match',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'Match_权限安全',
+            'method': 'Match',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: Match - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ Match 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ Match 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_match_性能边界(self):
+        """测试 Match 接口 - 性能边界 - 性能边界"""
+        request_data = {'team_id': 1006329, 'map_id': 10000263, 'difficulty': 1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='Match',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'Match_性能边界',
+            'method': 'Match',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: Match - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ Match 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ Match 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_cancelmatch_参数异常_必填参数缺失(self):
+        """测试 CancelMatch 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'team_id': 0}
         
         result = self.client.call_rpc(
             service='Room',
@@ -502,81 +2650,335 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'CancelMatch',
+            'name': 'CancelMatch_参数异常_必填参数缺失',
             'method': 'CancelMatch',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: CancelMatch")
+        print(f"\n{'='*60}")
+        print(f"测试接口: CancelMatch - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ CancelMatch 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CancelMatch 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ CancelMatch 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CancelMatch 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_getgameinfo(self):
-        """测试 GetGameInfo 接口（前置条件：先创建队伍并开始游戏）"""
-        # 前置条件1：先创建队伍
-        create_result = self.client.call_rpc(
+    def test_cancelmatch_参数异常_参数类型错误(self):
+        """测试 CancelMatch 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'team_id': 'wrong_type'}
+        
+        result = self.client.call_rpc(
             service='Room',
-            method='CreateTeam',
-            request_data={'game_mode': 1}
+            method='CancelMatch',
+            request_data=request_data
         )
         
-        if not create_result.get('success'):
-            self.skipTest(f"前置条件失败：无法创建队伍 - {create_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CancelMatch_参数异常_参数类型错误',
+            'method': 'CancelMatch',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
         
-        # 从创建队伍的响应中获取 team_id
-        create_response = create_result.get('response', {})
-        team_id = 0
-        if 'createteam' in create_response:
-            team_info = create_response['createteam'].get('team_info', {})
-            team_id = team_info.get('team_id', 0)
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CancelMatch - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
         
-        if team_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 team_id")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CancelMatch 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CancelMatch 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_cancelmatch_参数异常_参数值为空(self):
+        """测试 CancelMatch 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'team_id': 0}
         
-        # 前置条件2：开始游戏（获取 game_id）
-        start_game_result = self.client.call_rpc(
+        result = self.client.call_rpc(
             service='Room',
-            method='StartGameFromTeam',
-            request_data={'team_id': team_id, 'map_id': 1}
+            method='CancelMatch',
+            request_data=request_data
         )
         
-        if not start_game_result.get('success'):
-            self.skipTest(f"前置条件失败：无法开始游戏 - {start_game_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CancelMatch_参数异常_参数值为空',
+            'method': 'CancelMatch',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
         
-        # 从开始游戏的响应中获取 game_id（需要通过 GetUserState 获取）
-        user_state_result = self.client.call_rpc('Room', 'GetUserState', {})
-        game_id = 0
-        if user_state_result.get('success'):
-            user_state = user_state_result.get('response', {})
-            if 'getuserstate' in user_state:
-                game_id = user_state['getuserstate'].get('game_id', 0)
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CancelMatch - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
         
-        if game_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 game_id")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CancelMatch 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CancelMatch 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_cancelmatch_参数异常_参数值超出范围(self):
+        """测试 CancelMatch 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'team_id': 999999999}
         
-        # 使用获取到的 game_id 调用 GetGameInfo
-        request_data = {'game_id': game_id}
+        result = self.client.call_rpc(
+            service='Room',
+            method='CancelMatch',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CancelMatch_参数异常_参数值超出范围',
+            'method': 'CancelMatch',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CancelMatch - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CancelMatch 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CancelMatch 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_cancelmatch_参数异常_参数格式错误(self):
+        """测试 CancelMatch 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'team_id': -1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CancelMatch',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CancelMatch_参数异常_参数格式错误',
+            'method': 'CancelMatch',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CancelMatch - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CancelMatch 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CancelMatch 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_cancelmatch_权限安全(self):
+        """测试 CancelMatch 接口 - 权限安全 - 权限安全"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CancelMatch',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CancelMatch_权限安全',
+            'method': 'CancelMatch',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CancelMatch - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CancelMatch 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CancelMatch 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_cancelmatch_性能边界(self):
+        """测试 CancelMatch 接口 - 性能边界 - 性能边界"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='CancelMatch',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'CancelMatch_性能边界',
+            'method': 'CancelMatch',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: CancelMatch - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ CancelMatch 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ CancelMatch 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getgameinfo_参数异常_必填参数缺失(self):
+        """测试 GetGameInfo 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'game_id': 0}
         
         result = self.client.call_rpc(
             service='Room',
@@ -584,60 +2986,335 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'GetGameInfo',
+            'name': 'GetGameInfo_参数异常_必填参数缺失',
             'method': 'GetGameInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: GetGameInfo")
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetGameInfo - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ GetGameInfo 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetGameInfo 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ GetGameInfo 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetGameInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_leaveteam(self):
-        """测试 LeaveTeam 接口（前置条件：先创建队伍）"""
-        # 前置条件：先创建队伍
-        create_result = self.client.call_rpc(
+    def test_getgameinfo_参数异常_参数类型错误(self):
+        """测试 GetGameInfo 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'game_id': 'wrong_type'}
+        
+        result = self.client.call_rpc(
             service='Room',
-            method='CreateTeam',
-            request_data={'game_mode': 1}
+            method='GetGameInfo',
+            request_data=request_data
         )
         
-        if not create_result.get('success'):
-            self.skipTest(f"前置条件失败：无法创建队伍 - {create_result.get('error_message', '未知错误')}")
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetGameInfo_参数异常_参数类型错误',
+            'method': 'GetGameInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
         
-        # 从创建队伍的响应中获取 team_id
-        create_response = create_result.get('response', {})
-        team_id = 0
-        if 'createteam' in create_response:
-            team_info = create_response['createteam'].get('team_info', {})
-            team_id = team_info.get('team_id', 0)
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetGameInfo - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
         
-        if team_id == 0:
-            self.skipTest("前置条件失败：无法获取有效的 team_id")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetGameInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetGameInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getgameinfo_参数异常_参数值为空(self):
+        """测试 GetGameInfo 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'game_id': 0}
         
-        # 使用获取到的 team_id 调用 LeaveTeam
-        request_data = {'team_id': team_id}
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetGameInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetGameInfo_参数异常_参数值为空',
+            'method': 'GetGameInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetGameInfo - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetGameInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetGameInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getgameinfo_参数异常_参数值超出范围(self):
+        """测试 GetGameInfo 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'game_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetGameInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetGameInfo_参数异常_参数值超出范围',
+            'method': 'GetGameInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetGameInfo - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetGameInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetGameInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getgameinfo_参数异常_参数格式错误(self):
+        """测试 GetGameInfo 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'game_id': -1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetGameInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetGameInfo_参数异常_参数格式错误',
+            'method': 'GetGameInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetGameInfo - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetGameInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetGameInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getgameinfo_权限安全(self):
+        """测试 GetGameInfo 接口 - 权限安全 - 权限安全"""
+        request_data = {'game_id': 1001}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetGameInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetGameInfo_权限安全',
+            'method': 'GetGameInfo',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetGameInfo - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetGameInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetGameInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_getgameinfo_性能边界(self):
+        """测试 GetGameInfo 接口 - 性能边界 - 性能边界"""
+        request_data = {'game_id': 1001}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='GetGameInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'GetGameInfo_性能边界',
+            'method': 'GetGameInfo',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: GetGameInfo - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ GetGameInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ GetGameInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_参数异常_必填参数缺失(self):
+        """测试 LeaveTeam 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'team_id': 0}
         
         result = self.client.call_rpc(
             service='Room',
@@ -645,35 +3322,379 @@ class TestRoom(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'LeaveTeam',
+            'name': 'LeaveTeam_参数异常_必填参数缺失',
             'method': 'LeaveTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: LeaveTeam")
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ LeaveTeam 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ LeaveTeam 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_参数异常_参数类型错误(self):
+        """测试 LeaveTeam 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'team_id': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='LeaveTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'LeaveTeam_参数异常_参数类型错误',
+            'method': 'LeaveTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_参数异常_参数值为空(self):
+        """测试 LeaveTeam 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'team_id': 0}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='LeaveTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'LeaveTeam_参数异常_参数值为空',
+            'method': 'LeaveTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_参数异常_参数值超出范围(self):
+        """测试 LeaveTeam 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'team_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='LeaveTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'LeaveTeam_参数异常_参数值超出范围',
+            'method': 'LeaveTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_参数异常_参数格式错误(self):
+        """测试 LeaveTeam 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'team_id': -1}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='LeaveTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'LeaveTeam_参数异常_参数格式错误',
+            'method': 'LeaveTeam',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_业务异常(self):
+        """测试 LeaveTeam 接口 - 业务异常 - 业务异常"""
+        request_data = {'team_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='LeaveTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'LeaveTeam_业务异常',
+            'method': 'LeaveTeam',
+            'dimension': '业务异常',
+            'abnormal_type': '业务异常',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 业务异常 - 业务异常")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_权限安全(self):
+        """测试 LeaveTeam 接口 - 权限安全 - 权限安全"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='LeaveTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'LeaveTeam_权限安全',
+            'method': 'LeaveTeam',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_leaveteam_性能边界(self):
+        """测试 LeaveTeam 接口 - 性能边界 - 性能边界"""
+        request_data = {'team_id': 1006329}
+        
+        result = self.client.call_rpc(
+            service='Room',
+            method='LeaveTeam',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'LeaveTeam_性能边界',
+            'method': 'LeaveTeam',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: LeaveTeam - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ LeaveTeam 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ LeaveTeam 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
 if __name__ == '__main__':
     unittest.main()

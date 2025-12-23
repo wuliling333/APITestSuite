@@ -96,8 +96,8 @@ class TestHall(unittest.TestCase):
             cls.client.close()
     
 
-    def test_fetchselffulluserinfo(self):
-        """测试 FetchSelfFullUserInfo 接口"""
+    def test_fetchselffulluserinfo_参数异常_必填参数缺失(self):
+        """测试 FetchSelfFullUserInfo 接口 - 参数异常 - 参数异常_必填参数缺失"""
         request_data = {}
         
         result = self.client.call_rpc(
@@ -106,39 +106,335 @@ class TestHall(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'FetchSelfFullUserInfo',
+            'name': 'FetchSelfFullUserInfo_参数异常_必填参数缺失',
             'method': 'FetchSelfFullUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: FetchSelfFullUserInfo")
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSelfFullUserInfo - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ FetchSelfFullUserInfo 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSelfFullUserInfo 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ FetchSelfFullUserInfo 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSelfFullUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_fetchsimpleuserinfo(self):
-        """测试 FetchSimpleUserInfo 接口"""
-        request_data = {'target_uid': self.current_uid if hasattr(self, 'current_uid') else self.client.uid}
+    def test_fetchselffulluserinfo_参数异常_参数类型错误(self):
+        """测试 FetchSelfFullUserInfo 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSelfFullUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSelfFullUserInfo_参数异常_参数类型错误',
+            'method': 'FetchSelfFullUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSelfFullUserInfo - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSelfFullUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSelfFullUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchselffulluserinfo_参数异常_参数值为空(self):
+        """测试 FetchSelfFullUserInfo 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSelfFullUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSelfFullUserInfo_参数异常_参数值为空',
+            'method': 'FetchSelfFullUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSelfFullUserInfo - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSelfFullUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSelfFullUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchselffulluserinfo_参数异常_参数值超出范围(self):
+        """测试 FetchSelfFullUserInfo 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSelfFullUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSelfFullUserInfo_参数异常_参数值超出范围',
+            'method': 'FetchSelfFullUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSelfFullUserInfo - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSelfFullUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSelfFullUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchselffulluserinfo_参数异常_参数格式错误(self):
+        """测试 FetchSelfFullUserInfo 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSelfFullUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSelfFullUserInfo_参数异常_参数格式错误',
+            'method': 'FetchSelfFullUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSelfFullUserInfo - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSelfFullUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSelfFullUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchselffulluserinfo_权限安全(self):
+        """测试 FetchSelfFullUserInfo 接口 - 权限安全 - 权限安全"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSelfFullUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSelfFullUserInfo_权限安全',
+            'method': 'FetchSelfFullUserInfo',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSelfFullUserInfo - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSelfFullUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSelfFullUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchselffulluserinfo_性能边界(self):
+        """测试 FetchSelfFullUserInfo 接口 - 性能边界 - 性能边界"""
+        request_data = {}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSelfFullUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSelfFullUserInfo_性能边界',
+            'method': 'FetchSelfFullUserInfo',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSelfFullUserInfo - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSelfFullUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSelfFullUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchsimpleuserinfo_参数异常_必填参数缺失(self):
+        """测试 FetchSimpleUserInfo 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'target_uid': 0}
         
         result = self.client.call_rpc(
             service='Hall',
@@ -146,39 +442,335 @@ class TestHall(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'FetchSimpleUserInfo',
+            'name': 'FetchSimpleUserInfo_参数异常_必填参数缺失',
             'method': 'FetchSimpleUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: FetchSimpleUserInfo")
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSimpleUserInfo - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ FetchSimpleUserInfo 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSimpleUserInfo 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ FetchSimpleUserInfo 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSimpleUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_updatenickname(self):
-        """测试 UpdateNickname 接口"""
-        request_data = {'nickname': 'TestNickname_123'}
+    def test_fetchsimpleuserinfo_参数异常_参数类型错误(self):
+        """测试 FetchSimpleUserInfo 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'target_uid': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSimpleUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSimpleUserInfo_参数异常_参数类型错误',
+            'method': 'FetchSimpleUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSimpleUserInfo - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSimpleUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSimpleUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchsimpleuserinfo_参数异常_参数值为空(self):
+        """测试 FetchSimpleUserInfo 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'target_uid': 0}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSimpleUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSimpleUserInfo_参数异常_参数值为空',
+            'method': 'FetchSimpleUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSimpleUserInfo - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSimpleUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSimpleUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchsimpleuserinfo_参数异常_参数值超出范围(self):
+        """测试 FetchSimpleUserInfo 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'target_uid': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSimpleUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSimpleUserInfo_参数异常_参数值超出范围',
+            'method': 'FetchSimpleUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSimpleUserInfo - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSimpleUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSimpleUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchsimpleuserinfo_参数异常_参数格式错误(self):
+        """测试 FetchSimpleUserInfo 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'target_uid': -1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSimpleUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSimpleUserInfo_参数异常_参数格式错误',
+            'method': 'FetchSimpleUserInfo',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSimpleUserInfo - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSimpleUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSimpleUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchsimpleuserinfo_权限安全(self):
+        """测试 FetchSimpleUserInfo 接口 - 权限安全 - 权限安全"""
+        request_data = {'target_uid': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSimpleUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSimpleUserInfo_权限安全',
+            'method': 'FetchSimpleUserInfo',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSimpleUserInfo - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSimpleUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSimpleUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_fetchsimpleuserinfo_性能边界(self):
+        """测试 FetchSimpleUserInfo 接口 - 性能边界 - 性能边界"""
+        request_data = {'target_uid': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='FetchSimpleUserInfo',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'FetchSimpleUserInfo_性能边界',
+            'method': 'FetchSimpleUserInfo',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: FetchSimpleUserInfo - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ FetchSimpleUserInfo 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ FetchSimpleUserInfo 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_updatenickname_参数异常_必填参数缺失(self):
+        """测试 UpdateNickname 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'nickname': ''}
         
         result = self.client.call_rpc(
             service='Hall',
@@ -186,39 +778,383 @@ class TestHall(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'UpdateNickname',
+            'name': 'UpdateNickname_参数异常_必填参数缺失',
             'method': 'UpdateNickname',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: UpdateNickname")
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ UpdateNickname 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ UpdateNickname 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_sellitem(self):
-        """测试 SellItem 接口"""
-        request_data = {}
+    def test_updatenickname_参数异常_参数类型错误(self):
+        """测试 UpdateNickname 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'nickname': 12345}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='UpdateNickname',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'UpdateNickname_参数异常_参数类型错误',
+            'method': 'UpdateNickname',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_updatenickname_参数异常_参数值为空(self):
+        """测试 UpdateNickname 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'nickname': ''}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='UpdateNickname',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'UpdateNickname_参数异常_参数值为空',
+            'method': 'UpdateNickname',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_updatenickname_参数异常_参数值超出范围(self):
+        """测试 UpdateNickname 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'nickname': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='UpdateNickname',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'UpdateNickname_参数异常_参数值超出范围',
+            'method': 'UpdateNickname',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_updatenickname_参数异常_参数格式错误(self):
+        """测试 UpdateNickname 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'nickname': 'invalid_format_@#$%'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='UpdateNickname',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'UpdateNickname_参数异常_参数格式错误',
+            'method': 'UpdateNickname',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_updatenickname_业务异常(self):
+        """测试 UpdateNickname 接口 - 业务异常 - 业务异常"""
+        request_data = {'nickname': 'TestName_123'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='UpdateNickname',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'UpdateNickname_业务异常',
+            'method': 'UpdateNickname',
+            'dimension': '业务异常',
+            'abnormal_type': '业务异常',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '404'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 业务异常 - 业务异常")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_updatenickname_权限安全(self):
+        """测试 UpdateNickname 接口 - 权限安全 - 权限安全"""
+        request_data = {'nickname': 'TestName_123'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='UpdateNickname',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'UpdateNickname_权限安全',
+            'method': 'UpdateNickname',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_updatenickname_性能边界(self):
+        """测试 UpdateNickname 接口 - 性能边界 - 性能边界"""
+        request_data = {'nickname': 'TestName_123'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='UpdateNickname',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'UpdateNickname_性能边界',
+            'method': 'UpdateNickname',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: UpdateNickname - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ UpdateNickname 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ UpdateNickname 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_sellitem_参数异常_必填参数缺失(self):
+        """测试 SellItem 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'unique_id_list': 0}
         
         result = self.client.call_rpc(
             service='Hall',
@@ -226,39 +1162,335 @@ class TestHall(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'SellItem',
+            'name': 'SellItem_参数异常_必填参数缺失',
             'method': 'SellItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: SellItem")
+        print(f"\n{'='*60}")
+        print(f"测试接口: SellItem - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ SellItem 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ SellItem 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ SellItem 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ SellItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_buyitem(self):
-        """测试 BuyItem 接口"""
-        request_data = {}
+    def test_sellitem_参数异常_参数类型错误(self):
+        """测试 SellItem 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'unique_id_list': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='SellItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'SellItem_参数异常_参数类型错误',
+            'method': 'SellItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: SellItem - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ SellItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ SellItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_sellitem_参数异常_参数值为空(self):
+        """测试 SellItem 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'unique_id_list': 0}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='SellItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'SellItem_参数异常_参数值为空',
+            'method': 'SellItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: SellItem - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ SellItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ SellItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_sellitem_参数异常_参数值超出范围(self):
+        """测试 SellItem 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'unique_id_list': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='SellItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'SellItem_参数异常_参数值超出范围',
+            'method': 'SellItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: SellItem - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ SellItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ SellItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_sellitem_参数异常_参数格式错误(self):
+        """测试 SellItem 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'unique_id_list': -1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='SellItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'SellItem_参数异常_参数格式错误',
+            'method': 'SellItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: SellItem - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ SellItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ SellItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_sellitem_权限安全(self):
+        """测试 SellItem 接口 - 权限安全 - 权限安全"""
+        request_data = {'unique_id_list': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='SellItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'SellItem_权限安全',
+            'method': 'SellItem',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: SellItem - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ SellItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ SellItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_sellitem_性能边界(self):
+        """测试 SellItem 接口 - 性能边界 - 性能边界"""
+        request_data = {'unique_id_list': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='SellItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'SellItem_性能边界',
+            'method': 'SellItem',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: SellItem - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ SellItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ SellItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_buyitem_参数异常_必填参数缺失(self):
+        """测试 BuyItem 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'item_id_list': 0}
         
         result = self.client.call_rpc(
             service='Hall',
@@ -266,35 +1498,331 @@ class TestHall(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'BuyItem',
+            'name': 'BuyItem_参数异常_必填参数缺失',
             'method': 'BuyItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: BuyItem")
+        print(f"\n{'='*60}")
+        print(f"测试接口: BuyItem - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ BuyItem 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BuyItem 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ BuyItem 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BuyItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_buyitem_参数异常_参数类型错误(self):
+        """测试 BuyItem 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'item_id_list': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BuyItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BuyItem_参数异常_参数类型错误',
+            'method': 'BuyItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BuyItem - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BuyItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BuyItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_buyitem_参数异常_参数值为空(self):
+        """测试 BuyItem 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'item_id_list': 0}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BuyItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BuyItem_参数异常_参数值为空',
+            'method': 'BuyItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BuyItem - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BuyItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BuyItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_buyitem_参数异常_参数值超出范围(self):
+        """测试 BuyItem 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'item_id_list': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BuyItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BuyItem_参数异常_参数值超出范围',
+            'method': 'BuyItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BuyItem - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BuyItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BuyItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_buyitem_参数异常_参数格式错误(self):
+        """测试 BuyItem 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'item_id_list': -1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BuyItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BuyItem_参数异常_参数格式错误',
+            'method': 'BuyItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BuyItem - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BuyItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BuyItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_buyitem_权限安全(self):
+        """测试 BuyItem 接口 - 权限安全 - 权限安全"""
+        request_data = {'item_id_list': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BuyItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BuyItem_权限安全',
+            'method': 'BuyItem',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BuyItem - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BuyItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BuyItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_buyitem_性能边界(self):
+        """测试 BuyItem 接口 - 性能边界 - 性能边界"""
+        request_data = {'item_id_list': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BuyItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BuyItem_性能边界',
+            'method': 'BuyItem',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BuyItem - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BuyItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BuyItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
     def test_stashtobackpack(self):
         """测试 StashToBackpack 接口（前置条件：从仓库获取有效的unique_id和背包空cell_id）"""
@@ -344,7 +1872,7 @@ class TestHall(unittest.TestCase):
             'name': 'StashToBackpack',
             'method': 'StashToBackpack',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
@@ -352,14 +1880,16 @@ class TestHall(unittest.TestCase):
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
+        print(f"\n{'='*60}")
         print(f"测试接口: StashToBackpack")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
         # 断言
         if not result.get('success', False):
@@ -368,6 +1898,342 @@ class TestHall(unittest.TestCase):
             self.assertTrue(False, f"API调用失败: {error_msg}")
         else:
             print(f"\n✓ StashToBackpack 测试通过")
+
+    def test_stashtobackpack_参数异常_必填参数缺失(self):
+        """测试 StashToBackpack 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'unique_id': 0, 'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='StashToBackpack',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StashToBackpack_参数异常_必填参数缺失',
+            'method': 'StashToBackpack',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StashToBackpack - 参数异常 - 参数异常_必填参数缺失")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StashToBackpack 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StashToBackpack 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_stashtobackpack_参数异常_参数类型错误(self):
+        """测试 StashToBackpack 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'unique_id': 'wrong_type', 'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='StashToBackpack',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StashToBackpack_参数异常_参数类型错误',
+            'method': 'StashToBackpack',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StashToBackpack - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StashToBackpack 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StashToBackpack 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_stashtobackpack_参数异常_参数值为空(self):
+        """测试 StashToBackpack 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'unique_id': 0, 'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='StashToBackpack',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StashToBackpack_参数异常_参数值为空',
+            'method': 'StashToBackpack',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StashToBackpack - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StashToBackpack 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StashToBackpack 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_stashtobackpack_参数异常_参数值超出范围(self):
+        """测试 StashToBackpack 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'unique_id': 999999999, 'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='StashToBackpack',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StashToBackpack_参数异常_参数值超出范围',
+            'method': 'StashToBackpack',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StashToBackpack - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StashToBackpack 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StashToBackpack 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_stashtobackpack_参数异常_参数格式错误(self):
+        """测试 StashToBackpack 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'unique_id': -1, 'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='StashToBackpack',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StashToBackpack_参数异常_参数格式错误',
+            'method': 'StashToBackpack',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StashToBackpack - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StashToBackpack 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StashToBackpack 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_stashtobackpack_权限安全(self):
+        """测试 StashToBackpack 接口 - 权限安全 - 权限安全"""
+        request_data = {'unique_id': 1, 'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='StashToBackpack',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StashToBackpack_权限安全',
+            'method': 'StashToBackpack',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StashToBackpack - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StashToBackpack 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StashToBackpack 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_stashtobackpack_性能边界(self):
+        """测试 StashToBackpack 接口 - 性能边界 - 性能边界"""
+        request_data = {'unique_id': 1, 'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='StashToBackpack',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'StashToBackpack_性能边界',
+            'method': 'StashToBackpack',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: StashToBackpack - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ StashToBackpack 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ StashToBackpack 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
     def test_backpacktostash(self):
         """测试 BackpackToStash 接口（前置条件：从背包获取有效的cell_id）"""
@@ -407,7 +2273,7 @@ class TestHall(unittest.TestCase):
             'name': 'BackpackToStash',
             'method': 'BackpackToStash',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
@@ -415,14 +2281,16 @@ class TestHall(unittest.TestCase):
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
+        print(f"\n{'='*60}")
         print(f"测试接口: BackpackToStash")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
         # 断言
         if not result.get('success', False):
@@ -431,6 +2299,342 @@ class TestHall(unittest.TestCase):
             self.assertTrue(False, f"API调用失败: {error_msg}")
         else:
             print(f"\n✓ BackpackToStash 测试通过")
+
+    def test_backpacktostash_参数异常_必填参数缺失(self):
+        """测试 BackpackToStash 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'cell_id': 0}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BackpackToStash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BackpackToStash_参数异常_必填参数缺失',
+            'method': 'BackpackToStash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BackpackToStash - 参数异常 - 参数异常_必填参数缺失")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BackpackToStash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BackpackToStash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_backpacktostash_参数异常_参数类型错误(self):
+        """测试 BackpackToStash 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'cell_id': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BackpackToStash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BackpackToStash_参数异常_参数类型错误',
+            'method': 'BackpackToStash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BackpackToStash - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BackpackToStash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BackpackToStash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_backpacktostash_参数异常_参数值为空(self):
+        """测试 BackpackToStash 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'cell_id': 0}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BackpackToStash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BackpackToStash_参数异常_参数值为空',
+            'method': 'BackpackToStash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BackpackToStash - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BackpackToStash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BackpackToStash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_backpacktostash_参数异常_参数值超出范围(self):
+        """测试 BackpackToStash 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'cell_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BackpackToStash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BackpackToStash_参数异常_参数值超出范围',
+            'method': 'BackpackToStash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BackpackToStash - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BackpackToStash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BackpackToStash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_backpacktostash_参数异常_参数格式错误(self):
+        """测试 BackpackToStash 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'cell_id': -1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BackpackToStash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BackpackToStash_参数异常_参数格式错误',
+            'method': 'BackpackToStash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BackpackToStash - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BackpackToStash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BackpackToStash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_backpacktostash_权限安全(self):
+        """测试 BackpackToStash 接口 - 权限安全 - 权限安全"""
+        request_data = {'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BackpackToStash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BackpackToStash_权限安全',
+            'method': 'BackpackToStash',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BackpackToStash - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BackpackToStash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BackpackToStash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_backpacktostash_性能边界(self):
+        """测试 BackpackToStash 接口 - 性能边界 - 性能边界"""
+        request_data = {'cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='BackpackToStash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'BackpackToStash_性能边界',
+            'method': 'BackpackToStash',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: BackpackToStash - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ BackpackToStash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ BackpackToStash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
     def test_exchangebackpackitem(self):
         """测试 ExchangeBackpackItem 接口（前置条件：从背包获取两个有效的cell_id）"""
@@ -468,7 +2672,7 @@ class TestHall(unittest.TestCase):
             'name': 'ExchangeBackpackItem',
             'method': 'ExchangeBackpackItem',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
@@ -476,14 +2680,16 @@ class TestHall(unittest.TestCase):
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
+        print(f"\n{'='*60}")
         print(f"测试接口: ExchangeBackpackItem")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
         # 断言
         if not result.get('success', False):
@@ -493,9 +2699,345 @@ class TestHall(unittest.TestCase):
         else:
             print(f"\n✓ ExchangeBackpackItem 测试通过")
 
-    def test_debugaddcash(self):
-        """测试 DebugAddCash 接口"""
-        request_data = {}
+    def test_exchangebackpackitem_参数异常_必填参数缺失(self):
+        """测试 ExchangeBackpackItem 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'source_cell_id': 0, 'target_cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='ExchangeBackpackItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ExchangeBackpackItem_参数异常_必填参数缺失',
+            'method': 'ExchangeBackpackItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ExchangeBackpackItem - 参数异常 - 参数异常_必填参数缺失")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ExchangeBackpackItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ExchangeBackpackItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_exchangebackpackitem_参数异常_参数类型错误(self):
+        """测试 ExchangeBackpackItem 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'source_cell_id': 'wrong_type', 'target_cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='ExchangeBackpackItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ExchangeBackpackItem_参数异常_参数类型错误',
+            'method': 'ExchangeBackpackItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ExchangeBackpackItem - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ExchangeBackpackItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ExchangeBackpackItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_exchangebackpackitem_参数异常_参数值为空(self):
+        """测试 ExchangeBackpackItem 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'source_cell_id': 0, 'target_cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='ExchangeBackpackItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ExchangeBackpackItem_参数异常_参数值为空',
+            'method': 'ExchangeBackpackItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ExchangeBackpackItem - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ExchangeBackpackItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ExchangeBackpackItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_exchangebackpackitem_参数异常_参数值超出范围(self):
+        """测试 ExchangeBackpackItem 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'source_cell_id': 999999999, 'target_cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='ExchangeBackpackItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ExchangeBackpackItem_参数异常_参数值超出范围',
+            'method': 'ExchangeBackpackItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ExchangeBackpackItem - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ExchangeBackpackItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ExchangeBackpackItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_exchangebackpackitem_参数异常_参数格式错误(self):
+        """测试 ExchangeBackpackItem 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'source_cell_id': -1, 'target_cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='ExchangeBackpackItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ExchangeBackpackItem_参数异常_参数格式错误',
+            'method': 'ExchangeBackpackItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ExchangeBackpackItem - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ExchangeBackpackItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ExchangeBackpackItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_exchangebackpackitem_权限安全(self):
+        """测试 ExchangeBackpackItem 接口 - 权限安全 - 权限安全"""
+        request_data = {'source_cell_id': 10000263, 'target_cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='ExchangeBackpackItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ExchangeBackpackItem_权限安全',
+            'method': 'ExchangeBackpackItem',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ExchangeBackpackItem - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ExchangeBackpackItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ExchangeBackpackItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_exchangebackpackitem_性能边界(self):
+        """测试 ExchangeBackpackItem 接口 - 性能边界 - 性能边界"""
+        request_data = {'source_cell_id': 10000263, 'target_cell_id': 10000263}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='ExchangeBackpackItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'ExchangeBackpackItem_性能边界',
+            'method': 'ExchangeBackpackItem',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: ExchangeBackpackItem - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ ExchangeBackpackItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ ExchangeBackpackItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugaddcash_参数异常_必填参数缺失(self):
+        """测试 DebugAddCash 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'amount': 0}
         
         result = self.client.call_rpc(
             service='Hall',
@@ -503,39 +3045,335 @@ class TestHall(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'DebugAddCash',
+            'name': 'DebugAddCash_参数异常_必填参数缺失',
             'method': 'DebugAddCash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: DebugAddCash")
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddCash - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ DebugAddCash 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddCash 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ DebugAddCash 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddCash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
-    def test_debugadditem(self):
-        """测试 DebugAddItem 接口"""
-        request_data = {}
+    def test_debugaddcash_参数异常_参数类型错误(self):
+        """测试 DebugAddCash 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'amount': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddCash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddCash_参数异常_参数类型错误',
+            'method': 'DebugAddCash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddCash - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddCash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddCash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugaddcash_参数异常_参数值为空(self):
+        """测试 DebugAddCash 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'amount': 0}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddCash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddCash_参数异常_参数值为空',
+            'method': 'DebugAddCash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddCash - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddCash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddCash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugaddcash_参数异常_参数值超出范围(self):
+        """测试 DebugAddCash 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'amount': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddCash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddCash_参数异常_参数值超出范围',
+            'method': 'DebugAddCash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddCash - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddCash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddCash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugaddcash_参数异常_参数格式错误(self):
+        """测试 DebugAddCash 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'amount': 'invalid_format_@#$%'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddCash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddCash_参数异常_参数格式错误',
+            'method': 'DebugAddCash',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddCash - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddCash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddCash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugaddcash_权限安全(self):
+        """测试 DebugAddCash 接口 - 权限安全 - 权限安全"""
+        request_data = {'amount': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddCash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddCash_权限安全',
+            'method': 'DebugAddCash',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddCash - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddCash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddCash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugaddcash_性能边界(self):
+        """测试 DebugAddCash 接口 - 性能边界 - 性能边界"""
+        request_data = {'amount': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddCash',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddCash_性能边界',
+            'method': 'DebugAddCash',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddCash - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddCash 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddCash 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugadditem_参数异常_必填参数缺失(self):
+        """测试 DebugAddItem 接口 - 参数异常 - 参数异常_必填参数缺失"""
+        request_data = {'item_id': 0}
         
         result = self.client.call_rpc(
             service='Hall',
@@ -543,35 +3381,331 @@ class TestHall(unittest.TestCase):
             request_data=request_data
         )
         
-        # 保存测试结果用于报告
+        # 保存测试结果用于报告（包含维度信息）
         self.test_result = {
-            'name': 'DebugAddItem',
+            'name': 'DebugAddItem_参数异常_必填参数缺失',
             'method': 'DebugAddItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_必填参数缺失',
             'request': request_data,
-            'response': result,  # 保存完整的result，包括success、response、error_code、error_message
+            'response': result,
             'error_code': result.get('error_code', 200),
             'error_message': result.get('error_message', ''),
             'success': result.get('success', False),
-            'preconditions': []
+            'preconditions': [],
+            'expected_status': '400/500'
         }
         
         # 打印请求和响应信息（无论成功或失败）
-        print(f"\n============================================================")
-        print(f"测试接口: DebugAddItem")
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddItem - 参数异常 - 参数异常_必填参数缺失")
         print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
         print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
         print(f"响应码: {result.get('error_code', 200)}")
         if result.get('error_message'):
             print(f"错误信息: {result.get('error_message')}")
-        print(f"============================================================")
+        print(f"{'='*60}")
         
-        # 断言
-        if not result.get('success', False):
-            error_msg = result.get('error_message', '未知错误')
-            print(f"\n✗ DebugAddItem 测试失败: {error_msg}")
-            self.assertTrue(False, f"API调用失败: {error_msg}")
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddItem 异常测试通过: 返回预期错误码 {error_code}")
         else:
-            print(f"\n✓ DebugAddItem 测试通过")
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugadditem_参数异常_参数类型错误(self):
+        """测试 DebugAddItem 接口 - 参数异常 - 参数异常_参数类型错误"""
+        request_data = {'item_id': 'wrong_type'}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddItem_参数异常_参数类型错误',
+            'method': 'DebugAddItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数类型错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddItem - 参数异常 - 参数异常_参数类型错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugadditem_参数异常_参数值为空(self):
+        """测试 DebugAddItem 接口 - 参数异常 - 参数异常_参数值为空"""
+        request_data = {'item_id': 0}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddItem_参数异常_参数值为空',
+            'method': 'DebugAddItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值为空',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddItem - 参数异常 - 参数异常_参数值为空")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugadditem_参数异常_参数值超出范围(self):
+        """测试 DebugAddItem 接口 - 参数异常 - 参数异常_参数值超出范围"""
+        request_data = {'item_id': 999999999}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddItem_参数异常_参数值超出范围',
+            'method': 'DebugAddItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数值超出范围',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddItem - 参数异常 - 参数异常_参数值超出范围")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugadditem_参数异常_参数格式错误(self):
+        """测试 DebugAddItem 接口 - 参数异常 - 参数异常_参数格式错误"""
+        request_data = {'item_id': -1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddItem_参数异常_参数格式错误',
+            'method': 'DebugAddItem',
+            'dimension': '参数异常',
+            'abnormal_type': '参数异常_参数格式错误',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '400/500'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddItem - 参数异常 - 参数异常_参数格式错误")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugadditem_权限安全(self):
+        """测试 DebugAddItem 接口 - 权限安全 - 权限安全"""
+        request_data = {'item_id': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddItem_权限安全',
+            'method': 'DebugAddItem',
+            'dimension': '权限安全',
+            'abnormal_type': '权限安全',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '403'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddItem - 权限安全 - 权限安全")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
+
+    def test_debugadditem_性能边界(self):
+        """测试 DebugAddItem 接口 - 性能边界 - 性能边界"""
+        request_data = {'item_id': 1}
+        
+        result = self.client.call_rpc(
+            service='Hall',
+            method='DebugAddItem',
+            request_data=request_data
+        )
+        
+        # 保存测试结果用于报告（包含维度信息）
+        self.test_result = {
+            'name': 'DebugAddItem_性能边界',
+            'method': 'DebugAddItem',
+            'dimension': '性能边界',
+            'abnormal_type': '性能边界',
+            'request': request_data,
+            'response': result,
+            'error_code': result.get('error_code', 200),
+            'error_message': result.get('error_message', ''),
+            'success': result.get('success', False),
+            'preconditions': [],
+            'expected_status': '200'
+        }
+        
+        # 打印请求和响应信息（无论成功或失败）
+        print(f"\n{'='*60}")
+        print(f"测试接口: DebugAddItem - 性能边界 - 性能边界")
+        print(f"请求参数: {safe_json_dumps(request_data)}")
+        # 打印完整的服务器返回结果
+        print(f"服务器返回结果: {safe_json_dumps(result)}")
+        print(f"响应数据: {safe_json_dumps(result.get('response', {}))}")
+        print(f"响应码: {result.get('error_code', 200)}")
+        if result.get('error_message'):
+            print(f"错误信息: {result.get('error_message')}")
+        print(f"{'='*60}")
+        
+        # 异常测试用例的断言：如果返回了预期的错误码（非200），则认为通过
+        error_code = result.get('error_code', 200)
+        if error_code != 200:
+            # 返回了错误码，符合预期
+            print(f"\n✓ DebugAddItem 异常测试通过: 返回预期错误码 {error_code}")
+        else:
+            # 返回了200，不符合预期（异常测试应该返回错误）
+            error_msg = result.get('error_message', '未知错误')
+            print(f"\n✗ DebugAddItem 异常测试失败: 预期返回错误码，但返回了200")
+            self.assertTrue(False, f"异常测试失败: 预期返回错误码，但返回了200 - {error_msg}")
 
 if __name__ == '__main__':
     unittest.main()

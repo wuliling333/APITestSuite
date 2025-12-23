@@ -1,9 +1,1541 @@
 test_cases:
-  FetchSelfFullUserInfo:
-    description: "获取自己的完整用户信息"
+  FetchSelfFullUserInfo_正常:
+    description: FetchSelfFullUserInfo_正常调用
+    priority: P0
+    preconditions: 已登录
+    dimension: 正常
     request: {}
-  UpdateNickname:
-    description: "更新昵称"
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        fetchselffulluserinfo:
+          full_user_info:
+            uid: 10000263
+            nickname: TestName_123
+            cash: 10000
+            stash:
+              items: []
+            backpack:
+              cells: []
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  FetchSelfFullUserInfo_参数异常_必填参数缺失:
+    description: FetchSelfFullUserInfo_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  FetchSelfFullUserInfo_参数异常_参数类型错误:
+    description: FetchSelfFullUserInfo_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  FetchSelfFullUserInfo_参数异常_参数值为空:
+    description: FetchSelfFullUserInfo_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  FetchSelfFullUserInfo_参数异常_参数值超出范围:
+    description: FetchSelfFullUserInfo_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  FetchSelfFullUserInfo_参数异常_参数格式错误:
+    description: FetchSelfFullUserInfo_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request: {}
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  FetchSelfFullUserInfo_权限安全:
+    description: FetchSelfFullUserInfo_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录
+    dimension: 权限安全
+    request: {}
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  FetchSelfFullUserInfo_性能边界:
+    description: FetchSelfFullUserInfo_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录
+    dimension: 性能边界
+    request: {}
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        fetchselffulluserinfo:
+          full_user_info:
+            uid: 10000263
+            nickname: TestName_123
+            cash: 10000
+            stash:
+              items: []
+            backpack:
+              cells: []
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  FetchSimpleUserInfo_正常:
+    description: FetchSimpleUserInfo_正常调用
+    priority: P0
+    preconditions: 已登录
+    dimension: 正常
     request:
-      nickname: "TestNickname_123"
-
+      target_uid:
+        value: 10000263
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        fetchsimpleuserinfo:
+          simple_user_info:
+            uid: 10000263
+            nickname: TestName_123
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  FetchSimpleUserInfo_参数异常_必填参数缺失:
+    description: FetchSimpleUserInfo_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      target_uid:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  FetchSimpleUserInfo_参数异常_参数类型错误:
+    description: FetchSimpleUserInfo_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      target_uid:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: user not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  FetchSimpleUserInfo_参数异常_参数值为空:
+    description: FetchSimpleUserInfo_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      target_uid:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: user not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  FetchSimpleUserInfo_参数异常_参数值超出范围:
+    description: FetchSimpleUserInfo_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      target_uid:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: user not exist
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  FetchSimpleUserInfo_参数异常_参数格式错误:
+    description: FetchSimpleUserInfo_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      target_uid:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid target_uid
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  FetchSimpleUserInfo_权限安全:
+    description: FetchSimpleUserInfo_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录
+    dimension: 权限安全
+    request:
+      target_uid:
+        value: 10000263
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: user not exist
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  FetchSimpleUserInfo_性能边界:
+    description: FetchSimpleUserInfo_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录
+    dimension: 性能边界
+    request:
+      target_uid:
+        value: 10000263
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        fetchsimpleuserinfo:
+          simple_user_info:
+            uid: 10000263
+            nickname: TestName_123
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  UpdateNickname_正常:
+    description: UpdateNickname_正常调用
+    priority: P0
+    preconditions: 已登录
+    dimension: 正常
+    request:
+      nickname:
+        value: TestName_123
+        type: string
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        updatenickname:
+          nickname: TestName_123
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库记录已更新
+    remark: 正常业务流程验证
+  UpdateNickname_参数异常_必填参数缺失:
+    description: UpdateNickname_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      nickname:
+        value: null
+        type: string
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  UpdateNickname_参数异常_参数类型错误:
+    description: UpdateNickname_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      nickname:
+        value: 12345
+        type: string
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  UpdateNickname_参数异常_参数值为空:
+    description: UpdateNickname_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      nickname:
+        value: ''
+        type: string
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid nickname
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  UpdateNickname_参数异常_参数值超出范围:
+    description: UpdateNickname_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      nickname:
+        value: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        type: string
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: 'invalid nickname: value too long'
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  UpdateNickname_参数异常_参数格式错误:
+    description: UpdateNickname_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      nickname:
+        value: invalid_format_@#$%
+        type: string
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  UpdateNickname_业务异常:
+    description: UpdateNickname_业务异常_资源不存在
+    priority: P1
+    preconditions: 已登录
+    dimension: 业务异常
+    request:
+      nickname:
+        value: TestName_123
+        type: string
+    expected_status: '404'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: user not exist
+    jsonpath_assertion: $.error_code == 404
+    db_check: 数据未变更
+    remark: 操作不存在的资源
+  UpdateNickname_权限安全:
+    description: UpdateNickname_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录
+    dimension: 权限安全
+    request:
+      nickname:
+        value: TestName_123
+        type: string
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  UpdateNickname_性能边界:
+    description: UpdateNickname_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录
+    dimension: 性能边界
+    request:
+      nickname:
+        value: TestName_123
+        type: string
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        updatenickname:
+          nickname: TestName_123
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  SellItem_正常:
+    description: SellItem_正常调用
+    priority: P0
+    preconditions: 已登录，背包中有物品
+    dimension: 正常
+    request:
+      unique_id_list:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        sellitem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  SellItem_参数异常_必填参数缺失:
+    description: SellItem_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      unique_id_list:
+        value: null
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  SellItem_参数异常_参数类型错误:
+    description: SellItem_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      unique_id_list:
+        value: wrong_type
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  SellItem_参数异常_参数值为空:
+    description: SellItem_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      unique_id_list:
+        value: 0
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  SellItem_参数异常_参数值超出范围:
+    description: SellItem_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      unique_id_list:
+        value: 999999999
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  SellItem_参数异常_参数格式错误:
+    description: SellItem_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      unique_id_list:
+        value: -1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid unique_id_list
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  SellItem_权限安全:
+    description: SellItem_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，背包中有物品
+    dimension: 权限安全
+    request:
+      unique_id_list:
+        value: 1
+        type: int32
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  SellItem_性能边界:
+    description: SellItem_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，背包中有物品
+    dimension: 性能边界
+    request:
+      unique_id_list:
+        value: 1
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        sellitem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  BuyItem_正常:
+    description: BuyItem_正常调用
+    priority: P0
+    preconditions: 已登录，有足够现金
+    dimension: 正常
+    request:
+      item_id_list:
+        value: 1
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        buyitem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  BuyItem_参数异常_必填参数缺失:
+    description: BuyItem_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，有足够现金
+    dimension: 参数异常
+    request:
+      item_id_list:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  BuyItem_参数异常_参数类型错误:
+    description: BuyItem_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，有足够现金
+    dimension: 参数异常
+    request:
+      item_id_list:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  BuyItem_参数异常_参数值为空:
+    description: BuyItem_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，有足够现金
+    dimension: 参数异常
+    request:
+      item_id_list:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  BuyItem_参数异常_参数值超出范围:
+    description: BuyItem_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，有足够现金
+    dimension: 参数异常
+    request:
+      item_id_list:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  BuyItem_参数异常_参数格式错误:
+    description: BuyItem_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，有足够现金
+    dimension: 参数异常
+    request:
+      item_id_list:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid item_id_list
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  BuyItem_权限安全:
+    description: BuyItem_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，有足够现金
+    dimension: 权限安全
+    request:
+      item_id_list:
+        value: 1
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  BuyItem_性能边界:
+    description: BuyItem_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，有足够现金
+    dimension: 性能边界
+    request:
+      item_id_list:
+        value: 1
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        buyitem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  StashToBackpack_正常:
+    description: StashToBackpack_正常调用
+    priority: P0
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 正常
+    request:
+      unique_id:
+        value: 1
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        stashtobackpack:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  StashToBackpack_参数异常_必填参数缺失:
+    description: StashToBackpack_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 参数异常
+    request:
+      unique_id:
+        value: null
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  StashToBackpack_参数异常_参数类型错误:
+    description: StashToBackpack_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 参数异常
+    request:
+      unique_id:
+        value: wrong_type
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  StashToBackpack_参数异常_参数值为空:
+    description: StashToBackpack_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 参数异常
+    request:
+      unique_id:
+        value: 0
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  StashToBackpack_参数异常_参数值超出范围:
+    description: StashToBackpack_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 参数异常
+    request:
+      unique_id:
+        value: 999999999
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  StashToBackpack_参数异常_参数格式错误:
+    description: StashToBackpack_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 参数异常
+    request:
+      unique_id:
+        value: -1
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid unique_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  StashToBackpack_权限安全:
+    description: StashToBackpack_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 权限安全
+    request:
+      unique_id:
+        value: 1
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  StashToBackpack_性能边界:
+    description: StashToBackpack_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，仓库中有物品，背包有空位
+    dimension: 性能边界
+    request:
+      unique_id:
+        value: 1
+        type: int32
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        stashtobackpack:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  BackpackToStash_正常:
+    description: BackpackToStash_正常调用
+    priority: P0
+    preconditions: 已登录，背包中有物品
+    dimension: 正常
+    request:
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        backpacktostash:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  BackpackToStash_参数异常_必填参数缺失:
+    description: BackpackToStash_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      cell_id:
+        value: null
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  BackpackToStash_参数异常_参数类型错误:
+    description: BackpackToStash_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      cell_id:
+        value: wrong_type
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  BackpackToStash_参数异常_参数值为空:
+    description: BackpackToStash_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      cell_id:
+        value: 0
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  BackpackToStash_参数异常_参数值超出范围:
+    description: BackpackToStash_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      cell_id:
+        value: 999999999
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  BackpackToStash_参数异常_参数格式错误:
+    description: BackpackToStash_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，背包中有物品
+    dimension: 参数异常
+    request:
+      cell_id:
+        value: -1
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid cell_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  BackpackToStash_权限安全:
+    description: BackpackToStash_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，背包中有物品
+    dimension: 权限安全
+    request:
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  BackpackToStash_性能边界:
+    description: BackpackToStash_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，背包中有物品
+    dimension: 性能边界
+    request:
+      cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        backpacktostash:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  ExchangeBackpackItem_正常:
+    description: ExchangeBackpackItem_正常调用
+    priority: P0
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 正常
+    request:
+      source_cell_id:
+        value: 10000263
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        exchangebackpackitem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库状态正常
+    remark: 正常业务流程验证
+  ExchangeBackpackItem_参数异常_必填参数缺失:
+    description: ExchangeBackpackItem_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 参数异常
+    request:
+      source_cell_id:
+        value: null
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  ExchangeBackpackItem_参数异常_参数类型错误:
+    description: ExchangeBackpackItem_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 参数异常
+    request:
+      source_cell_id:
+        value: wrong_type
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  ExchangeBackpackItem_参数异常_参数值为空:
+    description: ExchangeBackpackItem_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 参数异常
+    request:
+      source_cell_id:
+        value: 0
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  ExchangeBackpackItem_参数异常_参数值超出范围:
+    description: ExchangeBackpackItem_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 参数异常
+    request:
+      source_cell_id:
+        value: 999999999
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  ExchangeBackpackItem_参数异常_参数格式错误:
+    description: ExchangeBackpackItem_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 参数异常
+    request:
+      source_cell_id:
+        value: -1
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid source_cell_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  ExchangeBackpackItem_权限安全:
+    description: ExchangeBackpackItem_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 权限安全
+    request:
+      source_cell_id:
+        value: 10000263
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  ExchangeBackpackItem_性能边界:
+    description: ExchangeBackpackItem_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录，背包中有至少2个物品
+    dimension: 性能边界
+    request:
+      source_cell_id:
+        value: 10000263
+        type: int32
+      target_cell_id:
+        value: 10000263
+        type: int32
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        exchangebackpackitem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  DebugAddCash_正常:
+    description: DebugAddCash_正常调用
+    priority: P0
+    preconditions: 已登录
+    dimension: 正常
+    request:
+      amount:
+        value: 1
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        debugaddcash:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库中存在新记录
+    remark: 正常业务流程验证
+  DebugAddCash_参数异常_必填参数缺失:
+    description: DebugAddCash_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      amount:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  DebugAddCash_参数异常_参数类型错误:
+    description: DebugAddCash_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      amount:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  DebugAddCash_参数异常_参数值为空:
+    description: DebugAddCash_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      amount:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  DebugAddCash_参数异常_参数值超出范围:
+    description: DebugAddCash_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      amount:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  DebugAddCash_参数异常_参数格式错误:
+    description: DebugAddCash_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      amount:
+        value: invalid_format_@#$%
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  DebugAddCash_权限安全:
+    description: DebugAddCash_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录
+    dimension: 权限安全
+    request:
+      amount:
+        value: 1
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  DebugAddCash_性能边界:
+    description: DebugAddCash_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录
+    dimension: 性能边界
+    request:
+      amount:
+        value: 1
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        debugaddcash:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
+  DebugAddItem_正常:
+    description: DebugAddItem_正常调用
+    priority: P0
+    preconditions: 已登录
+    dimension: 正常
+    request:
+      item_id:
+        value: 1
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        debugadditem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true && $.error_code == 200
+    db_check: 数据库中存在新记录
+    remark: 正常业务流程验证
+  DebugAddItem_参数异常_必填参数缺失:
+    description: DebugAddItem_参数异常_必填参数缺失
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      item_id:
+        value: null
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 必填参数缺失场景验证
+  DebugAddItem_参数异常_参数类型错误:
+    description: DebugAddItem_参数异常_参数类型错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      item_id:
+        value: wrong_type
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数类型错误场景验证
+  DebugAddItem_参数异常_参数值为空:
+    description: DebugAddItem_参数异常_参数值为空
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      item_id:
+        value: 0
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值为空场景验证
+  DebugAddItem_参数异常_参数值超出范围:
+    description: DebugAddItem_参数异常_参数值超出范围
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      item_id:
+        value: 999999999
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数值超出范围场景验证
+  DebugAddItem_参数异常_参数格式错误:
+    description: DebugAddItem_参数异常_参数格式错误
+    priority: P1
+    preconditions: 已登录
+    dimension: 参数异常
+    request:
+      item_id:
+        value: -1
+        type: int64
+    expected_status: 400/500
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid item_id
+    jsonpath_assertion: $.error_code != 200
+    db_check: 数据未变更
+    remark: 参数格式错误场景验证
+  DebugAddItem_权限安全:
+    description: DebugAddItem_权限安全_越权访问
+    priority: P0
+    preconditions: 已登录
+    dimension: 权限安全
+    request:
+      item_id:
+        value: 1
+        type: int64
+    expected_status: '403'
+    expected_response:
+      success: false
+      response: {}
+      error_code: 400
+      error_message: invalid request
+    jsonpath_assertion: $.error_code == 403
+    db_check: 数据未变更
+    remark: 无权限访问他人资源
+  DebugAddItem_性能边界:
+    description: DebugAddItem_性能边界_并发请求
+    priority: P2
+    preconditions: 已登录
+    dimension: 性能边界
+    request:
+      item_id:
+        value: 1
+        type: int64
+    expected_status: '200'
+    expected_response:
+      success: true
+      response:
+        debugadditem:
+          success: true
+      error_code: 200
+      error_message: ''
+    jsonpath_assertion: $.success == true
+    db_check: 性能指标正常
+    remark: 并发场景验证（需配合压测工具）
