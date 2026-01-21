@@ -162,3 +162,149 @@
 2025-12-23 19:54:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer
 2025-12-23 19:54:06 - APITestSuite - ERROR - 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
 2025-12-23 19:54:06 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 cell_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 cell_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object., 值: 0, 类型: <class 'int'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object.
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object., 值: 999999999, 类型: <class 'int'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object.
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object., 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object.
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object., 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object.
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object., 值: 0, 类型: <class 'int'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object.
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object., 值: 1, 类型: <class 'int'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object.
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object., 值: 1, 类型: <class 'int'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id_list 失败: Assignment not allowed to map, or repeated field "item_id_list" in protocol message object.
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 amount 失败: 'str' object cannot be interpreted as an integer, 值: invalid_format_@#$%, 类型: <class 'str'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 amount 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:05 - APITestSuite - ERROR - 设置字段 amount 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:05 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 amount 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:06 - APITestSuite - ERROR - 设置字段 item_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:06 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 item_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:06 - APITestSuite - ERROR - 设置字段 source_cell_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:06 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 source_cell_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object., 值: 0, 类型: <class 'int'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object.
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object., 值: 999999999, 类型: <class 'int'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object.
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object., 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object.
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object., 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object.
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object., 值: 0, 类型: <class 'int'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object.
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object., 值: 1, 类型: <class 'int'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object.
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object., 值: 1, 类型: <class 'int'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id_list 失败: Assignment not allowed to map, or repeated field "unique_id_list" in protocol message object.
+2026-01-21 16:20:08 - APITestSuite - ERROR - 设置字段 unique_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:08 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 unique_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:09 - APITestSuite - ERROR - 设置字段 nickname 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:09 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 nickname 失败: bad argument type for built-in operation
+2026-01-21 16:20:10 - APITestSuite - ERROR - 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:10 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:11 - APITestSuite - ERROR - 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:11 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:11 - APITestSuite - ERROR - 设置字段 game_mode 失败: 'str' object cannot be interpreted as an integer, 值: invalid_format_@#$%, 类型: <class 'str'>
+2026-01-21 16:20:11 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 game_mode 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:11 - APITestSuite - ERROR - 设置字段 game_mode 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:11 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 game_mode 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:12 - APITestSuite - ERROR - 设置字段 game_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:12 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 game_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:12 - APITestSuite - ERROR - 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:12 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:14 - APITestSuite - ERROR - 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:14 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:14 - APITestSuite - ERROR - 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:14 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:15 - APITestSuite - ERROR - 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:15 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:15 - APITestSuite - ERROR - 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:15 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 team_id 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:17 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:17 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:18 - APITestSuite - ERROR - 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:18 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:18 - APITestSuite - ERROR - 设置字段 last_uid 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:18 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 last_uid 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:20 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:20 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:20 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:20 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:20 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:20 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:20 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:20 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:20 - APITestSuite - ERROR - 设置字段 update_time_after 失败: 'str' object cannot be interpreted as an integer, 值: invalid_format_@#$%, 类型: <class 'str'>
+2026-01-21 16:20:20 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 update_time_after 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:20 - APITestSuite - ERROR - 设置字段 update_time_after 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:20 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 update_time_after 失败: 'str' object cannot be interpreted as an integer
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:21 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:21 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 client_msg_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 client_msg_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 client_msg_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 client_msg_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 client_msg_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 client_msg_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: -1, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 12345, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 client_msg_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 client_msg_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 conv_id 失败: bad argument type for built-in operation, 值: 10000263, 类型: <class 'int'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 conv_id 失败: bad argument type for built-in operation
+2026-01-21 16:20:22 - APITestSuite - ERROR - 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer, 值: wrong_type, 类型: <class 'str'>
+2026-01-21 16:20:22 - APITestSuite - ERROR - 编码请求body失败: [500] 设置字段 target_uid 失败: 'str' object cannot be interpreted as an integer

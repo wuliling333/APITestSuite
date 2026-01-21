@@ -26,8 +26,12 @@ class ReportGenerator:
         self.report_dir = config.get_report_dir()
         os.makedirs(self.report_dir, exist_ok=True)
     
-    def generate_report(self, test_results: Dict[str, Any]) -> str:
-        """生成HTML和Excel报告"""
+    def generate_report(self, test_results: Dict[str, Any]) -> Dict[str, str]:
+        """生成HTML和Excel报告
+        
+        Returns:
+            Dict包含 'html' 和 'excel' 两个键，值为对应的文件路径
+        """
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         report_filename = f"test_report_{timestamp}"
         report_path = os.path.join(self.report_dir, f"{report_filename}.html")
@@ -37,13 +41,17 @@ class ReportGenerator:
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
         
-        # 生成Excel报告
-        excel_path = self._generate_excel(test_results, "test_report.xlsx")
+        # 生成Excel报告（使用相同的时间戳）
+        excel_filename = f"{report_filename}.xlsx"
+        excel_path = self._generate_excel(test_results, excel_filename)
         
         # 清理旧报告
         self._cleanup_old_reports()
         
-        return report_path
+        return {
+            'html': report_path,
+            'excel': excel_path if excel_path else ''
+        }
     
     def _generate_html(self, test_results: Dict[str, Any]) -> str:
         """生成HTML内容"""

@@ -119,24 +119,48 @@ def main():
     
     # 5. 运行测试（如果指定）
     if args.run:
-        test_runner = TestRunner(config)
-        test_results = test_runner.run_all_tests()
-        
-        # 6. 生成报告（HTML和Excel）
-        print("\n" + "=" * 80)
-        print("生成测试报告...")
-        print("=" * 80)
-        
-        report_generator = ReportGenerator(config)
-        report_path = report_generator.generate_report(test_results)
-        
-        # 获取Excel报告路径
-        excel_path = os.path.join(config.get_report_dir(), "test_report.xlsx")
-        
-        print(f"✓ HTML报告已生成: {report_path}")
-        print(f"✓ Excel报告已生成: {excel_path}")
-        
-        print(f"\n💡 提示: HTML报告已更新到最新状态，可在浏览器中打开查看")
+        try:
+            print("\n" + "=" * 80)
+            print("运行测试...")
+            print("=" * 80)
+            test_runner = TestRunner(config)
+            test_results = test_runner.run_all_tests()
+            
+            if not test_results:
+                print("⚠️  未获取到测试结果，跳过报告生成")
+                return
+            
+            # 6. 生成报告（HTML和Excel）
+            print("\n" + "=" * 80)
+            print("生成测试报告...")
+            print("=" * 80)
+            
+            try:
+                report_generator = ReportGenerator(config)
+                report_paths = report_generator.generate_report(test_results)
+                
+                html_path = report_paths.get('html', '')
+                excel_path = report_paths.get('excel', '')
+                
+                if html_path:
+                    print(f"✓ HTML报告已生成: {html_path}")
+                if excel_path:
+                    print(f"✓ Excel报告已生成: {excel_path}")
+                print(f"\n💡 提示: HTML报告已更新到最新状态，可在浏览器中打开查看")
+            except Exception as e:
+                print(f"❌ 报告生成失败: {e}")
+                import traceback
+                traceback.print_exc()
+                
+        except KeyboardInterrupt:
+            print("\n\n⚠️  用户中断测试")
+            print("已保存部分测试结果")
+            sys.exit(130)
+        except Exception as e:
+            print(f"\n❌ 测试运行失败: {e}")
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)
     
     print("\n" + "=" * 80)
     print("完成!")
